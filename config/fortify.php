@@ -108,9 +108,14 @@ return [
         // Features::emailVerification(),
         //Features::updateProfileInformation(),
         Features::updatePasswords(),
+
+
         // Features::twoFactorAuthentication([
         //     'confirmPassword' => true,
         // ]),
     ],
+
+    'SETTING_BLADE_PROFIL_SESSION' => false,
+    'SETTING_BLADE_PROFIL_DELETE_USER' => false,
 
 ];

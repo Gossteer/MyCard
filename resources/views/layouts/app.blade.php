@@ -33,6 +33,39 @@
             <main>
                 {{ $slot }}
             </main>
+
+            <div class="row mt-5">
+                <div class="col-md-6 col-xl-4">
+                  <x-card class="mb-3">
+                    <x-slot name="header">
+                      <x-headline class="h6 mb-0">
+                        <x-link class="text-body" text="Card Header Headline" href="#"/>
+                      </x-headline>
+                    </x-slot>
+
+                    <x-slot name="image">
+                      <x-image src="https://via.placeholder.com/253x169" :width="[253]" :height="[169]"/>
+                    </x-slot>
+
+                    <x-slot name="body">
+                      <x-headline class="h5">
+                        <x-link text="Card Body Headline" href="#"/>
+                      </x-headline>
+                    </x-slot>
+
+                    <x-slot name="footer">
+                      card Footer Text
+                    </x-slot>
+                  </x-card>
+                </div>
+
+                <div class="col-md-6 col-xl-4">
+                  <x-card :all="$card" class="mb-3" :image="['width' => [253], 'height' => [169]]" :footer="['hide' => true]"/>
+                </div>
+                <div class="col-md-6 col-xl-4">
+                  <x-card :all="$card" class="mb-3" :image="['width' => [253], 'height' => [169]]" :header="['hide' => true]"/>
+                </div>
+              </div>
         </div>
 
         @stack('modals')
