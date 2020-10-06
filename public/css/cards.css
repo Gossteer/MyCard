@@ -53,6 +53,7 @@
     background-color: var(--colour-body-background);
     border: 2px solid var(--colour-background);
     display: block;
+    cursor: pointer;
     width: 100%;
     height: 100%;
   }
