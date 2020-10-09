@@ -6,21 +6,37 @@ use Livewire\Component;
 
 class Cards extends Component
 {
-    public $component_edit_text = 'cards.meinTextCards';
-    public $text= 'Чебурек не человек, человек не чебурек';
-    public $textt = 'lol1';
-    public $linkHiden = true;
+    public $cardsAttributes = array(
+        'text' => 'Чебурек не человек, человек не чебурек',
+        'styleRightText' => 'articles__content--rhs',
+        'styleLefttText' => 'articles__content--lhs',
+        'component_edit_text' => 'cards.cardsShow',
+        'dblclick' => 'dblclick_show',
+        'onclick' => 'xorClick(event)',
+        'hiddenRightSideCard' => '',
+        'articles__link' => 'articles__link'
+    );
 
-    public function component_edit_text_cheng()
+    public function dblclick_show()
     {
-        $this->linkHiden = true;
-        $this->component_edit_text = 'cards.meinTextCardsCheng';
+        $this->cardsAttributes['component_edit_text'] = 'cards.cardsEdit';
+        $this->cardsAttributes['articles__link'] = 'articles__link_edit';
+        $this->cardsAttributes['styleRightText'] = 'articles__content--rhss';
+        $this->cardsAttributes['styleLefttText'] = 'articles__content--lhss';
+        $this->cardsAttributes['text'] = 'Чебурек не человек, человек не чебурек';
+        $this->cardsAttributes['dblclick'] = 'dblclick_edit';
+        $this->cardsAttributes['onclick'] = '';
     }
 
-    public function lol()
+    public function dblclick_edit()
     {
-        $this->textt = 'pamagite';
-
+        $this->cardsAttributes['dblclick'] = 'dblclick_show';
+        $this->cardsAttributes['articles__link'] = 'articles__link';
+        $this->cardsAttributes['component_edit_text'] = 'cards.cardsShow';
+        $this->cardsAttributes['styleRightText'] = 'articles__content--rhs';
+        $this->cardsAttributes['styleLefttText'] = 'articles__content--lhs';
+        $this->cardsAttributes['text'] = 'Чебурек не человек, человек не чебурек';
+        $this->cardsAttributes['onclick'] = 'xorClick(event)';
     }
 
     public function render()
