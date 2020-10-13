@@ -7,15 +7,13 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class=" ">
-                <ol class="articles">
-                    <livewire:cards>
-                </ol>
+            <div class="cardMinimal">
+                <livewire:cards>
             </div>
         </div>
     </div>
 
     @push('style')
- <link rel="stylesheet" href="{{ asset('css/cards.css') }}">
- @endpush
+        <link rel="stylesheet" href="{{ asset('css/cards.css') }}">
+    @endpush
 </x-app-layout>
