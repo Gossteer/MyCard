@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // User::factory(10)->create();
+        $this->call(StyleCardSeeder::class);
+        $this->call(TagSeeder::class);
     }
 }

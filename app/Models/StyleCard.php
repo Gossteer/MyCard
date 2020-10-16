@@ -9,8 +9,13 @@ class StyleCard extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'background',
+        'text',
+    ];
+
     public function card()
     {
-        return $this->belongsTo('App\Models\Card');
+        return $this->hasMany('App\Models\Card');
     }
 }

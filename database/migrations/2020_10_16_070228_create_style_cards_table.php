@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class CreateStyleCardsTable extends Migration
@@ -23,6 +24,11 @@ class CreateStyleCardsTable extends Migration
         Schema::table('cards', function (Blueprint $table) {
            $table->foreignId('style_card_id')->default('1')->constrained()->onDelete('set default');
         });
+
+        DB::table('style_cards')->insert([
+            'background' => '#3C3B3D',
+            'text' => 'white',
+        ]);
     }
 
     /**

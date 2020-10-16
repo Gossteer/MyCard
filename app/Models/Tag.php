@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Tag extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'tag',
+    ];
+
+    public function card()
+    {
+        return $this->hasMany('App\Models\Card');
+    }
 }

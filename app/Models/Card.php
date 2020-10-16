@@ -11,7 +11,12 @@ class Card extends Model
 
     public function stylecard()
     {
-        return $this->hasMany('App\Models\StyleCard');
+        return $this->belongsTo('App\Models\StyleCard');
+    }
+
+    public function tag()
+    {
+        return $this->belongsTo('App\Models\Tag');
     }
 
     public function user()

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class StyleCardSeeder extends Seeder
 {
@@ -13,6 +14,9 @@ class StyleCardSeeder extends Seeder
      */
     public function run()
     {
-        //
+        DB::table('style_cards')->insert([
+            'background' => '#3C3B3D',
+            'text' => 'white',
+        ]);
     }
 }
