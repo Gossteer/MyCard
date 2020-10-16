@@ -24,6 +24,10 @@ class CreateUsersTable extends Migration
             $table->text('profile_photo_path')->nullable();
             $table->timestamps();
         });
+
+        // Schema::table('cards', function (Blueprint $table) {
+        //     $table->foreignId('user_id')->constrained('users')->onDelete('CASCADE');
+        // });
     }
 
     /**

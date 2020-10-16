@@ -1,13 +1,14 @@
+
 .cardMinimal {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
     grid-gap: 5rem;
     padding: 1.7rem;
-    background: #F5F7FA;
+    /* background: #F5F7FA; */
   }
   .cardMinimal .card {
-    --background:#FFFFFF;
-    --text:black;
+    --background: var(--background);
+    --text: var(--text);
     position: relative;
     height: 12rem;
     box-shadow: 0 0 2rem -1rem rgba(0, 0, 0, 0.05);
@@ -22,6 +23,7 @@
     height: 0rem;
     transform: translate(-50%, -50%);
     transition: 0.25s cubic-bezier(0.25, 0, 0, 1);
+
   }
   .cardMinimal .card .multi-button button {
     display: grid;
@@ -31,17 +33,17 @@
     height: 2rem;
     border: none;
     border-radius: 100%;
-    background: var(--background);
-    color: var(--text);
+    background:  var(--backgroundbutton);
+    color: var(--textbutton);
     transform: translate(-50%, -50%);
     cursor: pointer;
-    transition: 0.25s cubic-bezier(0.25, 0, 0, 1);
-    box-shadow: 0 0 0rem -0.25rem var(--background);
+    transition: 0.25s cubic-bezier(0.25, 0, 0, 1), background .25s ease-in-out, color .25s ease-in-out;
+    box-shadow: 0 0 0rem -0.25rem var(--backgroundbutton);
   }
   .cardMinimal .card .multi-button button:hover {
-    background: var(--text);
-    color: var(--background);
-    box-shadow: 0 0 1rem -0.25rem var(--background);
+    background: var(--textbutton);
+    color: var(--backgroundbutton);
+    box-shadow: 0 0 1rem -0.25rem var(--backgroundbutton);
   }
   .cardMinimal .card .multi-button button:first-child:nth-last-child(1):nth-child(1), .cardMinimal .card .multi-button button:first-child:nth-last-child(1) ~ *:nth-child(1) {
     left: 25%;
@@ -85,13 +87,82 @@
   }
   .cardMinimal .card .container {
     position: absolute;
+    display: flex;
+    flex-direction: column;
     width: 100%;
     height: 100%;
     border-radius: 1rem;
-    background: var(--background);
-    color: var(--text);
+    animation-name: rhss;
+    animation-duration: 0.55s;
+    animation-direction: alternate-reverse;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
   }
   .cardMinimal .card:hover .multi-button, .cardMinimal .card .multi-button:focus-within {
     width: 10rem;
     height: 10rem;
   }
+
+  .cardMinimal .card .containerEdit {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    border-radius: 1rem;
+    animation-name: rhss;
+    animation-duration: 0.55s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+  }
+
+  .articles__footer {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 7%;
+    padding-right: 7%;
+    padding-bottom: 1%;
+  }
+
+  .mainText {
+    padding-top: 3%;
+    font-weight: 600;
+    padding-left: 5%;
+    padding-right: 5%;
+    word-wrap: break-word;
+    /* font-size: calc(var(--base-grid)*2); */
+  }
+
+
+  .containerEdit .texForTexarea {
+      /* background-color: var(--background);
+      color: var(--text); */
+      font-weight: 600;
+      width: 100%;
+      height: 100%;
+      resize: none;
+      animation-name: rhss;
+      animation-duration: 0.55s;
+      animation-timing-function: ease-in-out;
+      animation-fill-mode: forwards;
+  }
+
+  @keyframes rhss{
+    from {
+      background-color:  var(--background);
+      color: var(--text);
+
+    }
+
+    to {
+      /* background-color: white;
+      color: #3C3B3D; */
+
+      /* background-color:  var(--background);
+      color: var(--text); */
+      background-color: var(--backgroundbutton);
+      color: var(--textbutton);
+    }
+
+}
