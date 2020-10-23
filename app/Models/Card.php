@@ -9,9 +9,13 @@ class Card extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'text',
+    ];
+
     public function stylecard()
     {
-        return $this->belongsTo('App\Models\StyleCard');
+        return $this->belongsTo('App\Models\StyleCard', 'style_card_id');
     }
 
     public function tag()

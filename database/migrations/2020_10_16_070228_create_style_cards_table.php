@@ -22,12 +22,12 @@ class CreateStyleCardsTable extends Migration
         });
 
         Schema::table('cards', function (Blueprint $table) {
-           $table->foreignId('style_card_id')->default('1')->constrained()->onDelete('set default');
+           $table->foreignId('style_card_id')->default('1')->constrained('style_cards')->onDelete('set default');
         });
 
         DB::table('style_cards')->insert([
             'background' => '#3C3B3D',
-            'text' => 'white',
+            'text' => '#ffffff',
         ]);
     }
 

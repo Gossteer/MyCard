@@ -3,10 +3,6 @@
 </div>
 <div class="containerEdit"  style="{{$attributes['style1']}}">
     <div class="mainText" style=" height: 94%;" >
-        <textarea class="texForTexarea" maxlength="255" wire:model.lazy="text">{{$attributes['textforEdit']}}</textarea>
+        <textarea class="texForTexarea"></textarea>
     </div>
 </div>
-
-
-
-
