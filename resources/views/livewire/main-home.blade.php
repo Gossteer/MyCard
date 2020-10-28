@@ -7,8 +7,8 @@
                 'textbackground' => $card->stylecard->text
                 ])
             @endforeach
-            @livewire('addcard', ['background' => $endcard->stylecard->background,
-            'textbackground' => $endcard->stylecard->text])
+            @livewire('addcard', ['background' => $endcard->stylecard->background ?? '#3C3B3D',
+            'textbackground' => $endcard->stylecard->text ?? '#ffffff'])
         </div>
     </div>
 </div>
