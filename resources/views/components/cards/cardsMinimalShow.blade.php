@@ -3,8 +3,8 @@
 </div>
 <a id="sourceCard" href="{{$attributes['source']}}">
     <div class="container"  style="{{$attributes['style1']}}">
-        <div class="mainText" style=" height: 85%;">
-            <textarea readonly class="texForTexareaShow" style="">{{$attributes['text']}}</textarea>
+        <div class="mainText" style=" height: 88%;">
+            <div readonly class="texForTexareaShow" style="{{$attributes['backgroundscrollBar']}}">{{$attributes['text']}}</div>
         </div>
         <div class="articles__footer">
             <p>{{$attributes['tag']}}</p>
