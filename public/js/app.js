@@ -19391,3 +19391,5 @@ module.exports = __webpack_require__(/*! C:\wamp64\www\test_new_function_laravel
 /***/ })
 
 /******/ });
+
+
