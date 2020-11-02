@@ -19,6 +19,7 @@ class Cards extends Component
     public $textbackground;
     public $textbutton;
     public $backgroundbutton;
+    public $backgroundscrollBar;
 
     function inverseHex( $color )
     {
@@ -69,6 +70,8 @@ class Cards extends Component
         $this->textforEdit = $this->text;
         $this->backgroundbutton = $this->background;
         $this->textbutton = $this->textbackground;
+        $this->backgroundscrollBar = sscanf($this->textbutton, "#%02x%02x%02x");
+
     }
 
     public function click_edit()
