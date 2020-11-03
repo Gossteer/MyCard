@@ -186,7 +186,7 @@
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
 }
 .card ::-webkit-scrollbar-thumb:window-inactive {
-    background:  rgba(var(--backgroundscrollBarHide),0.7);
+    background:  rgba(var(--backgroundscrollBarHide),0.8);
 }
 
   .box {

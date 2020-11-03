@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Tag;
 use Livewire\Component;
 
 class Addcard extends Component
@@ -11,6 +12,9 @@ class Addcard extends Component
     public $tag;
     public $component_edit_text = 'cards.addcardShow';
     public $source;
+    public $text;
+    public $selectTags;
+    public $texForTexarea;
     public $click = 'click_edit';
     public $textbutton;
     public $backgroundbutton;
@@ -22,11 +26,27 @@ class Addcard extends Component
 
     public function mount()
     {
+        $this->selectTags = Tag::all()->toArray();
         $this->backgroundbutton = $this->background;
         $this->textbutton = $this->textbackground;
     }
+    //Сделать возможность добавления собственных тэгов
+    //Сделать валидацию на объём сымволов и другое
+    public function clickNext1()
+    {
+        $this->texForTexarea = $this->text;
+        $this->component_edit_text = 'cards.addcardEditTag';
+    }
 
-    //сделать валидацию на объём сымволов и другое
+    public function clickNext2()
+    {
+
+    }
+
+    // public function clickNext3()
+    // {
+
+    // }
 
     public function click_edit()
     {

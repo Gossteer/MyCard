@@ -10,7 +10,7 @@
 
     @push('style')
         <link rel="stylesheet" href="{{ asset('css/cards.css') }}">
-        <script src="{{ asset('js/card.js') }}" defer></script>
+        <script src="{{ asset('js/card.js') }}" ></script>
     @endpush
 </x-app-layout>
 
