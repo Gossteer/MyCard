@@ -12,7 +12,6 @@ class Addcard extends Component
     public $tag;
     public $component_edit_text = 'cards.addcardShow';
     public $source;
-    public $lol;
     public $text;
     public $selectTags;
     public $texForTexarea;
