@@ -4,9 +4,11 @@
         style1="--backgroundbutton:{{$textbutton}}; --textbutton:{{$backgroundbutton}};"
         style2="--backgroundbutton:{{$backgroundbutton}}; --textbutton:{{$textbutton}};"
         source="{{$source}}" tag="{{$tag}}" texForTexarea="{{$texForTexarea}}" :selectTags="$selectTags"
-        timeCreate="{{$timeCreate}}" dateCreate="{{$dateCreate}}" :selectedTag="$selectedTag" tag="{{$tag}}"
-        source="{{$source}}"/>
+        timeCreate="{{$timeCreate}}" dateCreate="{{$dateCreate}}" :selectedTag="$selectedTag" tag="{{$selectTags->find($selectedTag)->tag}}"
+        source="{{$source}}"
+        backgroundscrollBar="--backgroundscrollBarHide:{{$backgroundscrollBar[0]}},{{$backgroundscrollBar[1]}},{{$backgroundscrollBar[2]}};--backgroundscrollBar:{{$backgroundMain}}"/>
     </div>
 </div>
+
 
 

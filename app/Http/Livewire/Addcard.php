@@ -12,6 +12,7 @@ class Addcard extends Component
     public $tag;
     public $component_edit_text = 'cards.addcardShow';
     public $source;
+    public $lol;
     public $text;
     public $selectTags;
     public $texForTexarea;
@@ -23,6 +24,7 @@ class Addcard extends Component
     public $dateCreate;
     public $timeCreate;
     public $selectedTag;
+    public $backgroundscrollBar;
 
     public function render()
     {
@@ -34,17 +36,19 @@ class Addcard extends Component
         $this->dateCreate = date("d.m.y");
         $this->timeCreate = date("H:i:s");
         $this->selectTags = Tag::all();
+        $this->selectedTag = 1;
         $this->backgroundMain = $this->background;
         $this->textbuttonMain = $this->textbackground;
         $this->backgroundbutton = $this->background;
         $this->textbutton = $this->textbackground;
+        $this->backgroundscrollBar = sscanf($this->textbutton, "#%02x%02x%02x");
     }
     //Сделать возможность добавления собственных тэгов
     //Сделать валидацию на объём сымволов и другое
+
     public function clickNext1()
     {
         $this->component_edit_text = 'cards.addcardEditSource';
-        $this->tag = Tag::find($this->selectedTag)->tag ?? 'Общее';
         $this->texForTexarea = $this->text;
         $this->backgroundbutton = $this->background;
         $this->textbutton = $this->textbackground;

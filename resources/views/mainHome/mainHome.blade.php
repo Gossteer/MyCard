@@ -8,9 +8,13 @@
     @livewire('main-home')
 
 
+
     @push('style')
         <link rel="stylesheet" href="{{ asset('css/cards.css') }}">
         <script src="{{ asset('js/card.js') }}" defer></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" ></script>
     @endpush
+
+
 </x-app-layout>
 
