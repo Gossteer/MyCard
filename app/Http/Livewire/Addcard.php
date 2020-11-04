@@ -18,6 +18,11 @@ class Addcard extends Component
     public $click = 'click_edit';
     public $textbutton;
     public $backgroundbutton;
+    public $backgroundMain;
+    public $textbuttonMain;
+    public $dateCreate;
+    public $timeCreate;
+    public $selectedTag;
 
     public function render()
     {
@@ -26,7 +31,11 @@ class Addcard extends Component
 
     public function mount()
     {
-        $this->selectTags = Tag::all()->toArray();
+        $this->dateCreate = date("d.m.y");
+        $this->timeCreate = date("H:i:s");
+        $this->selectTags = Tag::all();
+        $this->backgroundMain = $this->background;
+        $this->textbuttonMain = $this->textbackground;
         $this->backgroundbutton = $this->background;
         $this->textbutton = $this->textbackground;
     }
@@ -34,22 +43,39 @@ class Addcard extends Component
     //Сделать валидацию на объём сымволов и другое
     public function clickNext1()
     {
+        $this->component_edit_text = 'cards.addcardEditSource';
+        $this->tag = Tag::find($this->selectedTag)->tag ?? 'Общее';
         $this->texForTexarea = $this->text;
-        $this->component_edit_text = 'cards.addcardEditTag';
+        $this->backgroundbutton = $this->background;
+        $this->textbutton = $this->textbackground;
+        $this->backgroundMain = $this->textbackground;
+        $this->textbuttonMain =  $this->background;
+    }
+
+    public function clickBack1()
+    {
+        $this->component_edit_text = 'cards.addcardEdit';
     }
 
     public function clickNext2()
     {
+        $this->component_edit_text = 'cards.addcardPreview';
+    }
+
+    public function clickBack2()
+    {
+        $this->component_edit_text = 'cards.addcardEditSource';
+    }
+
+    public function clickNext3()
+    {
 
     }
 
-    // public function clickNext3()
-    // {
-
-    // }
-
     public function click_edit()
     {
+        $this->textbuttonMain =  $this->background;
+        $this->backgroundMain =  $this->textbackground;
         $this->backgroundbutton = $this->textbackground;
         $this->textbutton = $this->background;
         $this->component_edit_text = 'cards.addcardEdit';
