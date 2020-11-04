@@ -3,12 +3,11 @@
 </div>
 <div class="containerEdit"  style="{{$attributes['style1']}}">
     <div class="mainText" style=" height: 99%;" >
-        <textarea wire:model.lazy="text" maxlength="255" class="texForTexarea"></textarea>
+        <textarea wire:model.defer="text" maxlength="255" class="texForTexarea"></textarea>
     </div>
     <div class="articles__footer">
         <div  class="select" style="{{$attributes['backgroundscrollBar']}}">
-            {{-- <input class="select__input" hidden id="select__input"> --}}
-            <div class="select__head">{{$selectTags->find($selectedTag)->tag}}</div>
+            <div class="select__head">{{$attributes['tag']}}</div>
             <ul class="select__list" style="display: none;">
                 @foreach ($selectTags as $selectTag)
                     <li x-data x-on:click="$wire.set('selectedTag', {{$selectTag->id}})" class="select__item">{{$selectTag->tag}}</li>
@@ -52,5 +51,5 @@
             }
         });
     });
-    </script>
+</script>
 
