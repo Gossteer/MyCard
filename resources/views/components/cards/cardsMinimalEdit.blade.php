@@ -1,11 +1,55 @@
 <div class="multi-button"  style="{{$attributes['style2']}}">
-    <button class="fas fa-heart" wire:click="{{$attributes['click']}}"></button>
+    <button class="fas fa-heart" wire:click="click_edit_cource()"></button>
+    <button class="fas fa-heart" wire:click="removecards()"></button>
+    <button class="fas fa-heart" wire:click="click_chow()"></button>
 </div>
 <div class="containerEdit"  style="{{$attributes['style1']}}">
     <div class="mainText" style=" height: 94%;" >
-        <textarea class="texForTexarea" maxlength="255" wire:model.defer="text" style="{{$attributes['backgroundscrollBar']}}">{{$attributes['textforEdit']}}</textarea>
+        <textarea class="texForTexarea" maxlength="255" wire:model.defer="text" style="{{$attributes['backgroundscrollBar']}}">{{$attributes['text']}}</textarea>
+    </div>
+    <div class="articles__footer">
+        <div  class="select" style="{{$attributes['backgroundscrollBar']}}">
+            <div class="select__head">{{$attributes['tag']}}</div>
+            <ul class="select__list" style="display: none;">
+                @foreach ($selectTagsforcard as $selectTagforcard)
+                    <li x-data x-on:click="$wire.set('selectedTagforcard', {{$selectTagforcard->id}})" class="select__item">{{$selectTagforcard->tag}}</li>
+                @endforeach
+            </ul>
+        </div>
+        <time title="{{date('H:i:s', strtotime($attributes['data']))}}">{{date('d.m.y', strtotime($attributes['data']))}}</time>
     </div>
 </div>
+
+<script>
+    jQuery(($) => {
+        $('.select').on('click', '.select__head', function () {
+            if ($(this).hasClass('open')) {
+                $(this).removeClass('open');
+                $(this).next().fadeOut();
+            } else {
+                $('.select__head').removeClass('open');
+                $('.select__list').fadeOut();
+                $(this).addClass('open');
+                $(this).next().fadeIn();
+            }
+        });
+
+        $('.select').on('click', '.select__item', function () {
+            $('.select__head').removeClass('open');
+            $(this).parent().fadeOut();
+            $(this).parent().prev().text($(this).text());
+            // $(this).parent().prev().prev().val($(this).attr("idselect"));
+            // $(this).parent().prev().prev().text($(this).attr("idselect"));
+        });
+
+        $(document).click(function (e) {
+            if (!$(e.target).closest('.select').length) {
+                $('.select__head').removeClass('open');
+                $('.select__list').fadeOut();
+            }
+        });
+    });
+</script>
 
 
 

@@ -14,8 +14,9 @@ class Cards extends Component
     public $tag;
     public $component_edit_text = 'cards.cardsMinimalShow';
     public $source;
-    public $click = 'click_edit';
     public $background;
+    public $selectTagsforcard;
+    public $selectedTagforcard;
     public $textbackground;
     public $textbutton;
     public $backgroundbutton;
@@ -56,22 +57,28 @@ class Cards extends Component
         return ($prependHash?'#':NULL).$r.$g.$b;
     }
 
-    //сделать валидацию на объём сымволов и другое
-
-    public function update()
-    {
-        Card::find($this->idCard)->update([
-            'text' => $this->text
-        ]);
-    }
-
     public function mount()
     {
         $this->textforEdit = $this->text;
         $this->backgroundbutton = $this->background;
         $this->textbutton = $this->textbackground;
-        $this->backgroundscrollBar = sscanf($this->textbutton, "#%02x%02x%02x");
+    }
 
+
+    //сделать валидацию на объём сымволов и другое
+
+    public function update()
+    {
+        Card::find($this->idCard)->update([
+            'text' => $this->text,
+            'source' => $this->source,
+            'tag_id' => $this->selectedTagforcard,
+        ]);
+    }
+
+    public function removecards()
+    {
+        $this->emitUp('deletecard', $this->idCard);
     }
 
     public function click_edit()
@@ -79,7 +86,6 @@ class Cards extends Component
         $this->backgroundbutton = $this->textbackground;
         $this->textbutton = $this->background;
         $this->component_edit_text = 'cards.cardsMinimalEdit';
-        $this->click = 'click_chow';
     }
 
     public function click_chow()
@@ -88,8 +94,15 @@ class Cards extends Component
         $this->backgroundbutton = $this->background;
         $this->textbutton = $this->textbackground;
         $this->component_edit_text = 'cards.cardsMinimalShow';
-        $this->click = 'click_edit';
     }
+
+    public function click_edit_cource()
+    {
+        $this->update();
+        $this->component_edit_text = 'cards.cardsMinimalEditSource';
+    }
+
+
 
 
 

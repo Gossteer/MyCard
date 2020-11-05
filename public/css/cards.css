@@ -163,12 +163,12 @@
     height: 100%;
     resize: none;
     overflow: auto;
+    overflow-x: hidden;
     animation-name: rhss;
     animation-duration: .55s;
     animation-direction: alternate-reverse;
     animation-timing-function: ease-in-out;
     animation-fill-mode: forwards;
-
 }
 
 .card ::-webkit-scrollbar {

@@ -2,11 +2,12 @@
     <button class="fas fa-heart" wire:click="clickNext3"></button>
     <button class="fas fa-heart" wire:click="clickBack2"></button>
     <button class="fas fa-heart" wire:click="clickBack1"></button>
+    <button class="fas fa-heart" wire:click="uploudall()"></button>
 </div>
 <a id="addsourceCard" target="_blank" href="{{$attributes['source']}}">
     <div class="container"  style="{{$attributes['style1']}}">
         <div class="mainText" style=" height: 87%;">
-            <div readonly class="texForTexareaShow" style="{{$attributes['backgroundscrollBar']}}">{{$attributes['texForTexarea']}}</div>
+            <div readonly class="texForTexareaShow" style="{{$attributes['backgroundscrollBar']}}">{{$attributes['text']}}</div>
         </div>
         <div class="articles__footer">
             <p>{{$attributes['tag']}}</p>

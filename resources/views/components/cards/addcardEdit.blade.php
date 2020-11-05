@@ -1,5 +1,6 @@
 <div class="multi-button"  style="{{$attributes['style2']}}">
     <button class="fas fa-heart" wire:click="clickNext1()"></button>
+    <button class="fas fa-heart" wire:click="uploudall()"></button>
 </div>
 <div class="containerEdit"  style="{{$attributes['style1']}}">
     <div class="mainText" style=" height: 94%;" >
