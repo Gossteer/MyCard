@@ -1,8 +1,13 @@
-    sourceCard.addEventListener('click', function(e){
+let elementsArray = document.querySelectorAll("#sourceCard");
+
+elementsArray.forEach(function(elem) {
+    elem.addEventListener('click', function(e){
         e.preventDefault();
-      });
-    sourceCard.addEventListener('dblclick', function(){
-        location = sourceCard.href;
-      });
+    });
+    elem.addEventListener('dblclick', function(){
+        location = elem.href;
+    });
+});
+
 
 

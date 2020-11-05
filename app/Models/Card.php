@@ -11,6 +11,10 @@ class Card extends Model
 
     protected $fillable = [
         'text',
+        'source',
+        'user_id',
+        'tag_id',
+        'style_card_id'
     ];
 
     public function stylecard()

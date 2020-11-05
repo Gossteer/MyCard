@@ -2,7 +2,7 @@
     <button class="fas fa-heart" wire:click="clickNext1()"></button>
 </div>
 <div class="containerEdit"  style="{{$attributes['style1']}}">
-    <div class="mainText" style=" height: 99%;" >
+    <div class="mainText" style=" height: 94%;" >
         <textarea wire:model.defer="text" maxlength="255" class="texForTexarea"></textarea>
     </div>
     <div class="articles__footer">
@@ -17,8 +17,6 @@
         <time title="{{$attributes['timeCreate']}}">{{$attributes['dateCreate']}}</time>
     </div>
 </div>
-
-
 
 <script>
     jQuery(($) => {
@@ -38,8 +36,6 @@
             $('.select__head').removeClass('open');
             $(this).parent().fadeOut();
             $(this).parent().prev().text($(this).text());
-            // document.getElementById("select__input").value = $(this).attr("idselect");
-            // alert($(this).attr("idselect"));
             // $(this).parent().prev().prev().val($(this).attr("idselect"));
             // $(this).parent().prev().prev().text($(this).attr("idselect"));
         });

@@ -2,14 +2,15 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Card;
 use App\Models\Tag;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Addcard extends Component
 {
     public $background;
     public $textbackground;
-    public $tag;
     public $component_edit_text = 'cards.addcardShow';
     public $source;
     public $text;
@@ -72,7 +73,13 @@ class Addcard extends Component
 
     public function clickNext3()
     {
-
+        Card::create([
+            'text' => $this->text,
+            'source' => $this->source,
+            'user_id' => Auth::user()->id,
+            // 'style_card_id' => ,
+            'tag_id'
+        ]);
     }
 
     public function click_edit()
