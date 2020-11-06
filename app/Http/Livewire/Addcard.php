@@ -33,24 +33,15 @@ class Addcard extends Component
 
     public function mount()
     {
-        $this->selectTags = Tag::all();
-        $this->uploudall();
-    }
-
-    public function uploudall()
-    {
         $this->dateCreate = date("d.m.y");
         $this->timeCreate = date("H:i:s");
+        $this->selectTags = Tag::all();
         $this->selectedTag = 1;
         $this->backgroundMain = $this->background;
         $this->textbuttonMain = $this->textbackground;
         $this->backgroundbutton = $this->background;
         $this->textbutton = $this->textbackground;
         $this->backgroundscrollBar = sscanf($this->textbutton, "#%02x%02x%02x");
-        $this->click = 'click_edit';
-        $this->component_edit_text = 'cards.addcardShow';
-        $this->text = '';
-        $this->source = '';
     }
     //Сделать возможность добавления собственных тэгов
     //Сделать валидацию на объём сымволов и другое
@@ -87,11 +78,8 @@ class Addcard extends Component
             'source' => $this->source,
             'user_id' => Auth::user()->id,
             // 'style_card_id' => ,
-            'tag_id' => $this->selectedTag
+            'tag_id'
         ]);
-        $this->emitUp('aftercreateordelete');
-        $this->uploudall();
-
     }
 
     public function click_edit()

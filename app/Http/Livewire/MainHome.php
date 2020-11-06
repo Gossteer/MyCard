@@ -16,6 +16,7 @@ class MainHome extends Component
     public $component_edit_text;
     public $source;
     public $text;
+    public $checkmaxCards;
     public $selectTags;
     public $click;
     public $textbutton;
@@ -27,6 +28,7 @@ class MainHome extends Component
     public $selectedTag;
     public $backgroundscrollBar;
     public $user_id;
+    public $countMaxCardForUser = 5;
 
     // protected $listeners = ['aftercreate' => 'aftercreate'];
 
@@ -87,8 +89,11 @@ class MainHome extends Component
         return view('livewire.main-home');
     }
 
-    //Сделать возможность добавления собственных тэгов
-    //Сделать валидацию на объём сымволов и другое
+    // Доделать селект, чтобы открывался и закрывался нормально или найти другое решение
+    // Проработать двойной клик и последующую смену стилей
+    // Сделать возможность добавления собственных тэгов
+    // Сделать валидацию на объём сымволов и другое
+    // Добавить группы карточек (автоматическое объединение оных при одинаковых тегах)
 
     public function clickNext1()
     {
@@ -117,16 +122,22 @@ class MainHome extends Component
 
     public function clickNext3()
     {
-        Card::create([
-            'text' => $this->text,
-            'source' => $this->source,
-            'user_id' => $this->user_id,
-            // 'style_card_id' => ,
-            'tag_id' => $this->selectedTag,
-        ]);
-        // $this->cards = Card::where('user_id', $this->user_id)->get();
-        // $this->endcard = $this->cards->last();
-        $this->aftercreateordelete();
+        $this->maxCards();
+        if (!$this->checkmaxCards) {
+            Card::create([
+                'text' => $this->text,
+                'source' => $this->source,
+                'user_id' => $this->user_id,
+                // 'style_card_id' => ,
+                'tag_id' => $this->selectedTag,
+            ]);
+            $this->aftercreateordelete();
+        }
+    }
+
+    public function maxCards()
+    {
+        $this->checkmaxCards = ($this->cards->count() + 1) > $this->countMaxCardForUser ? true : '';
     }
 
     public function click_edit()
