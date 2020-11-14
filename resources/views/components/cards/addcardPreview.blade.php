@@ -4,16 +4,31 @@
     <button class="fas fa-heart" wire:click="clickBack1"></button>
     <button class="fas fa-heart" wire:click="uploudall()"></button>
 </div>
-<a id="addsourceCard" target="_blank" href="{{$attributes['source']}}">
-    <div class="container"  style="{{$attributes['style1']}}">
+<a id="addsourceCard" target="_blank" href="">
+    <div class="container articles__link"  style="{{$attributes['style1']}}">
         <div class="mainText" style=" height: 87%;">
-            <div readonly class="texForTexareaShow" style="{{$attributes['backgroundscrollBar']}}">{{$attributes['text']}}</div>
+            <div class="articles__link link_left"></div>
+            <div readonly class="texForTexareaShow" style="overflow: hidden;{{$attributes['backgroundscrollBar']}}">{{$attributes['text']}}</div>
         </div>
         <div class="articles__footer">
             <p>{{$attributes['tag']}}</p>
-            <time title="{{$attributes['timeCreate']}}">{{$attributes['dateCreate']}}</time>
+            <time ></time>
         </div>
     </div>
+</a>
+<a id="addsourceCard" target="_blank" href="">
+    <div class="container articles__link_edit"  style="{{$attributes['style1']}}">
+        <div class="mainText" style=" height: 87%;">
+            <div class="articles__link link_right"></div>
+            <div readonly class="texForTexareaShow" style="overflow: hidden;{{$attributes['backgroundscrollBar']}}">{{$attributes['text']}}</div>
+        </div>
+        <div class="articles__footer">
+            <p></p>
+            <time title="{{$attributes['timeCreate']}}">{{$attributes['dateCreate']}}</time>
+        </div>
+
+    </div>
+
 </a>
 
 <x-jet-dialog-modal wire:model="checkmaxCards">
@@ -32,14 +47,7 @@
     </x-slot>
 </x-jet-dialog-modal>
 
-<script>
-    addsourceCard.addEventListener('click', function(e){
-        e.preventDefault();
-    });
-    addsourceCard.addEventListener('dblclick', function(){
-        location = addsourceCard.href;
-    });
-</script>
+
 
 
 

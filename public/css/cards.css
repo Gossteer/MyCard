@@ -1,4 +1,8 @@
 
+:root {
+    --base-grid: 8px;
+  }
+
 .cardMinimal {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
@@ -147,6 +151,7 @@
       width: 100%;
       height: 100%;
       resize: none;
+      overflow-x: hidden;
       animation-name: rhss;
       animation-duration: .55s;
       animation-direction: alternate-reverse;
@@ -223,6 +228,53 @@
     animation-timing-function: ease-in-out;
     animation-fill-mode: forwards;
 }
+
+/* .container .articles__link{
+    background-color: #ffffff;
+
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    outline: none;
+  } */
+
+  .link_left {
+    right: 90%;
+    transform: rotate(180deg);
+  }
+
+  .link_right {
+    left: 67%;
+    right: 24px;
+  }
+
+  .container .articles__link {
+    content: "";
+    position: absolute;
+    border: 2px solid var(--textbutton);
+    top: 46%;
+    width: 18px;
+    height: 16px;
+    /* margin-top: 42%; */
+    margin-left: 22%;
+    clip-path: polygon(20% 0,100% 50%,21% 90%,0 100%,75% 40%,0 0);
+    -webkit-clip-path: polygon(20% 0,100% 50%,21% 90%,0 100%,75% 40%,0 0);
+    background-color: var(--textbutton);
+  }
+
+  @media (max-height: 812px) and (min-height: 569px) {
+    .link_left {
+        right: 92%;
+        transform: rotate(180deg);
+      }
+
+      .link_right {
+        left: 70%;
+        right: 24px;
+      }
+
+  }
 
 .selectTag{
     width: 50%;
@@ -330,5 +382,17 @@
 .select__list .select__item:hover {
     background:  rgba(var(--backgroundscrollBarHide),0.8);
 }
+
+.articles__link_edit {
+    clip-path: polygon(48.8% 0,100% 0,100% 100%,48.8% 100%);
+    -webkit-clip-path: polygon(50% 0,100% 0,100% 100%,50% 100%);
+  }
+
+  .articles__link {
+    clip-path: polygon(0 0,51% 0,51% 100%,0 100%);
+    -webkit-clip-path: polygon(0 0,51% 0,51% 100%,0 100%);
+  }
+
+
 
 
