@@ -12,7 +12,7 @@
         </div>
         <div class="articles__footer">
             <p>{{$attributes['tag']}}</p>
-            <time ></time>
+            <time></time>
         </div>
     </div>
 </a>
@@ -24,26 +24,11 @@
         </div>
         <div class="articles__footer">
             <p></p>
-            <time title="{{$attributes['timeCreate']}}">{{$attributes['dateCreate']}}</time>
+            <time title="{{$attributes['datatime']}}">{{$attributes['data']}}</time>
         </div>
     </div>
 </a>
 
-<x-jet-dialog-modal wire:model="checkmaxCards">
-    <x-slot name="title">
-        Ваш лимит карточек превышен
-    </x-slot>
-
-    <x-slot name="content">
-        Пожалуйста удалите ненужные карточки или преобретите <a href="" style="font-weight: bold">подписку</a>
-    </x-slot>
-
-    <x-slot name="footer">
-        <x-jet-button class="ml-2" x-on:click="show = false" wire:loading.attr="disabled">
-            Ок
-        </x-jet-button>
-    </x-slot>
-</x-jet-dialog-modal>
 
 
 

@@ -98,10 +98,13 @@
     height: 100%;
     border-radius: 1rem;
     animation-name: rhss;
-    animation-duration: 0.55s;
+    animation-duration: .55s;
     animation-direction: alternate-reverse;
     animation-timing-function: ease-in-out;
     animation-fill-mode: forwards;
+    /* background:  var(--background);
+    color: var(--text);
+    transition: background .55s ease-in-out, color .55s ease-in-out; */
   }
   .cardMinimal .card:hover .multi-button, .cardMinimal .card .multi-button:focus-within {
     width: 10rem;
@@ -169,6 +172,9 @@
     resize: none;
     overflow: auto;
     overflow-x: hidden;
+    /* background:  var(--background);
+    color: var(--text);
+    transition: background .55s ease-in-out, color .55s ease-in-out; */
     animation-name: rhss;
     animation-duration: .55s;
     animation-direction: alternate-reverse;
@@ -202,7 +208,7 @@
     justify-content: center;
   }
 
-.container .d24 {
+  .containerEdit .d24 {
     height: 100px;
     outline: none;
     width: 20px;
@@ -215,7 +221,7 @@
     animation-fill-mode: forwards;
 }
 
-.container .d24:after {
+.containerEdit .d24:after {
     content: "";
     height: 20px;
     outline: none;
@@ -252,7 +258,7 @@
   .container .articles__link {
     content: "";
     position: absolute;
-    border: 2px solid var(--textbutton);
+    border: 2px solid var(--backgroundbutton);
     top: 46%;
     width: 18px;
     height: 16px;
@@ -260,7 +266,7 @@
     margin-left: 22%;
     clip-path: polygon(20% 0,100% 50%,21% 90%,0 100%,75% 40%,0 0);
     -webkit-clip-path: polygon(20% 0,100% 50%,21% 90%,0 100%,75% 40%,0 0);
-    background-color: var(--textbutton);
+    background-color: var(--backgroundbutton);
   }
 
   @media (max-height: 812px) and (min-height: 569px) {

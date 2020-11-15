@@ -1,13 +1,13 @@
 <div class="multi-button"  style="{{$attributes['style2']}}">
     <button class="fas fa-heart" wire:click="clickNext1()"></button>
-    <button class="fas fa-heart" wire:click="uploudall()"></button>
+    <button class="fas fa-heart" wire:click="click_chow()"></button>
 </div>
 <div class="containerEdit"  style="{{$attributes['style1']}}">
     <div class="mainText" style=" height: 94%;" >
-        <textarea wire:model.defer="text" maxlength="255" class="texForTexarea"></textarea>
+        <textarea wire:model.defer="text" maxlength="255" class="texForTexarea" style="{{$attributes['backgroundscrollBar']}}"></textarea>
     </div>
     <div class="articles__footer">
-        <div  class="select" id="selectcardadd" style="{{$attributes['backgroundscrollBar']}}">
+        <div  class="select" id="selectcardadd" >
             <div class="select__head" id="selectheadcardadd">{{$attributes['tag']}}</div>
             <ul class="select__list" id="selectlistcardadd" style="display: none;">
                 @foreach ($selectTags as $selectTag)

@@ -16,7 +16,7 @@
                 @endforeach
             </ul>
         </div>
-        <time title="{{date('H:i:s', strtotime($attributes['data']))}}">{{date('d.m.y', strtotime($attributes['data']))}}</time>
+        <time title="{{$attributes['datatime']}}">{{$attributes['data']}}</time>
     </div>
 </div>
 

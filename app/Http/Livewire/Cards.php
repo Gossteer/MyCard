@@ -10,6 +10,7 @@ class Cards extends Component
     public $text;
     public $textforEdit;
     public $data;
+    public $datacard;
     public $idCard;
     public $tag;
     public $component_edit_text = 'cards.cardsMinimalShow';
@@ -21,6 +22,7 @@ class Cards extends Component
     public $textbutton;
     public $backgroundbutton;
     public $backgroundscrollBar;
+    public $datatime;
 
     function inverseHex( $color )
     {
@@ -59,9 +61,13 @@ class Cards extends Component
 
     public function mount()
     {
+        $this->data = date('d.m.y', strtotime($this->datacard));
+        $this->datatime = date('H:i:s', strtotime($this->datacard));
         $this->textforEdit = $this->text;
         $this->backgroundbutton = $this->background;
         $this->textbutton = $this->textbackground;
+        //Выгружать в моунт саму карточку, брать от туда стили (присваивать), брать от туда id стиля
+        $this->backgroundscrollBar = sscanf($this->textbutton, "#%02x%02x%02x");
     }
 
 
@@ -73,6 +79,7 @@ class Cards extends Component
             'text' => $this->text,
             'source' => $this->source,
             'tag_id' => $this->selectedTagforcard,
+            'style_card_id' => $this->lastcardstyle,
         ]);
     }
 
@@ -81,11 +88,42 @@ class Cards extends Component
         $this->emitUp('deletecard', $this->idCard);
     }
 
+    // public function resetcolor()
+    // {
+    //     $this->colorchengfirst($this->allstyles->find($this->lastcardstyle)->background,$this->allstyles->find($this->lastcardstyle)->text);
+    //     $this->colorcheng($this->background,$this->textbackground);
+    // }
+
+    // public function leftchengcolor()
+    // {
+    //     $this->lastcardstyle--;
+    //     $this->lastcardstyle == 0 ? $this->lastcardstyle = $this->countstyles : '';
+    //     $this->resetcolor();
+    // }
+
+    // public function rightchengcolor()
+    // {
+    //     $this->lastcardstyle == $this->countstyles ? $this->lastcardstyle = 1 : $this->lastcardstyle++;
+    //     $this->resetcolor();
+    // }
+
+    // public function colorcheng($background = '#3C3B3D', $textbackground = '#ffffff')
+    // {
+    //     $this->backgroundbutton = $background;
+    //     $this->textbutton = $textbackground;
+    // }
+
+    public function click_preview()
+    {
+        $this->update();
+        $this->component_edit_text = 'cards.cardsMinimalPreview';
+    }
+
     public function click_edit()
     {
+        $this->component_edit_text = 'cards.cardsMinimalEdit';
         $this->backgroundbutton = $this->textbackground;
         $this->textbutton = $this->background;
-        $this->component_edit_text = 'cards.cardsMinimalEdit';
     }
 
     public function click_chow()
@@ -101,10 +139,6 @@ class Cards extends Component
         $this->update();
         $this->component_edit_text = 'cards.cardsMinimalEditSource';
     }
-
-
-
-
 
     public function render()
     {

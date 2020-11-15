@@ -3,12 +3,12 @@
 </div>
 <a id="sourceCard" target="_blank" href="{{$attributes['source']}}">
     <div class="container"  style="{{$attributes['style1']}}">
-        <div class="mainText" style=" height: 87%;">
+        <div class="mainText" style=" height: 86%;">
             <div readonly class="texForTexareaShow" style="{{$attributes['backgroundscrollBar']}}">{{$attributes['text']}}</div>
         </div>
         <div class="articles__footer">
             <p>{{$attributes['tag']}}</p>
-            <time title="{{date('H:i:s', strtotime($attributes['data']))}}">{{date('d.m.y', strtotime($attributes['data']))}}</time>
+            <time title="{{$attributes['datatime']}}">{{$attributes['data']}}</time>
         </div>
     </div>
 </a>

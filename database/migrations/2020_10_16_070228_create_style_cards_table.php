@@ -29,6 +29,14 @@ class CreateStyleCardsTable extends Migration
             'background' => '#3C3B3D',
             'text' => '#ffffff',
         ]);
+        DB::table('style_cards')->insert([
+            'background' => '#fc0fc0',
+            'text' => '#808080',
+        ]);
+        DB::table('style_cards')->insert([
+            'background' => '#FFF200',
+            'text' => '#600CAC',
+        ]);
     }
 
     /**
