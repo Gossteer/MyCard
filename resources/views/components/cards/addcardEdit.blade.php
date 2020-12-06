@@ -7,7 +7,7 @@
         <textarea wire:model.defer="text" maxlength="255" class="texForTexarea" style="{{$attributes['backgroundscrollBar']}}"></textarea>
     </div>
     <div class="articles__footer">
-        <div  class="select" id="selectcardadd" >
+        <div  class="select" id="selectcardadd" style="{{$attributes['backgroundscrollBar']}}">
             <div class="select__head" id="selectheadcardadd">{{$attributes['tag']}}</div>
             <ul class="select__list" id="selectlistcardadd" style="display: none;">
                 @foreach ($selectTags as $selectTag)

@@ -47,7 +47,7 @@ class MainHome extends Component
     //     $this->endcard = $this->cards->last();
     // }
 
-    protected $listeners = ['deletecard' => 'deletecard'];
+    protected $listeners = ['deletecard' => 'deletecard', 'aftercreateordelete' => 'aftercreateordelete'];
 
     public function mount()
     {
@@ -62,7 +62,7 @@ class MainHome extends Component
     public function aftercreateordelete()
     {
         $this->cards = Card::where('user_id', $this->user_id)->get();
-        $this->lastcardstyle = $this->cards->last()->style_card_id;
+        $this->lastcardstyle = $this->cards->last()->style_card_id ?? 1;
         $this->resetcolor();
     }
 
@@ -196,6 +196,6 @@ class MainHome extends Component
     public function click_chow()
     {
         $this->uploudall();
-        $this->resetcolor();
+        $this->aftercreateordelete();
     }
 }

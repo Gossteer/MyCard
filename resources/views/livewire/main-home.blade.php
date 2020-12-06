@@ -2,9 +2,7 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="cardMinimal">
             @foreach ($cards as $card)
-                @livewire('cards', [ 'selectTagsforcard' => $selectTags, 'idCard' => $card->id ,'text' => $card->text,
-                'datacard' =>$card->created_at, 'source' => $card->source, 'background' => $card->stylecard->background, 'selectedTagforcard' => $card->tag->id,
-                'textbackground' => $card->stylecard->text], key($card->id))
+                @livewire('cards', [ 'selectTagsforcard' => $selectTags, 'cardselect' => $card, 'allstylesforcard' => $allstyles], key($card->id))
             @endforeach
             {{-- @livewire('addcard', ['background' => $endcard->stylecard->background ?? '#3C3B3D',
             'textbackground' => $endcard->stylecard->text ?? '#ffffff']) --}}

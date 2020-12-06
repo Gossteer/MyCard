@@ -8,10 +8,7 @@ use Livewire\Component;
 class Cards extends Component
 {
     public $text;
-    public $textforEdit;
     public $data;
-    public $datacard;
-    public $idCard;
     public $tag;
     public $component_edit_text = 'cards.cardsMinimalShow';
     public $source;
@@ -23,6 +20,11 @@ class Cards extends Component
     public $backgroundbutton;
     public $backgroundscrollBar;
     public $datatime;
+    public $stylecard;
+    public $cardselect;
+    public $allstylesforcard;
+    public $idCard;
+    public $countstyles;
 
     function inverseHex( $color )
     {
@@ -61,13 +63,16 @@ class Cards extends Component
 
     public function mount()
     {
-        $this->data = date('d.m.y', strtotime($this->datacard));
-        $this->datatime = date('H:i:s', strtotime($this->datacard));
-        $this->textforEdit = $this->text;
-        $this->backgroundbutton = $this->background;
-        $this->textbutton = $this->textbackground;
-        //Выгружать в моунт саму карточку, брать от туда стили (присваивать), брать от туда id стиля
-        $this->backgroundscrollBar = sscanf($this->textbutton, "#%02x%02x%02x");
+        $this->data = date('d.m.y', strtotime($this->cardselect->created_at));
+        $this->datatime = date('H:i:s', strtotime($this->cardselect->created_at));
+        $this->text = $this->cardselect->text;
+        $this->countstyles = $this->allstylesforcard->count();
+        $this->stylecard = $this->cardselect->style_card_id;
+        $this->resetcolor();
+        $this->source = $this->cardselect->source;
+        $this->selectedTagforcard = $this->cardselect->tag_id;
+        $this->idCard = $this->cardselect->id;
+        //Выгружать в моунт саму карточку, брать от туда стили (присваивать), брать от туда id стиля. Сделать плавный переход хотя бы у кнопок
     }
 
 
@@ -79,7 +84,7 @@ class Cards extends Component
             'text' => $this->text,
             'source' => $this->source,
             'tag_id' => $this->selectedTagforcard,
-            'style_card_id' => $this->lastcardstyle,
+            'style_card_id' => $this->stylecard,
         ]);
     }
 
@@ -88,55 +93,65 @@ class Cards extends Component
         $this->emitUp('deletecard', $this->idCard);
     }
 
-    // public function resetcolor()
-    // {
-    //     $this->colorchengfirst($this->allstyles->find($this->lastcardstyle)->background,$this->allstyles->find($this->lastcardstyle)->text);
-    //     $this->colorcheng($this->background,$this->textbackground);
-    // }
+    public function resetcolor()
+    {
+        $this->colorchengfirst($this->allstylesforcard->find($this->stylecard)->background,$this->allstylesforcard->find($this->stylecard)->text);
+        $this->colorcheng($this->background,$this->textbackground);
+    }
 
-    // public function leftchengcolor()
-    // {
-    //     $this->lastcardstyle--;
-    //     $this->lastcardstyle == 0 ? $this->lastcardstyle = $this->countstyles : '';
-    //     $this->resetcolor();
-    // }
+    public function leftchengcolor()
+    {
+        $this->stylecard--;
+        $this->stylecard == 0 ? $this->stylecard = $this->countstyles : '';
+        $this->resetcolor();
+        $this->update();
+    }
 
-    // public function rightchengcolor()
-    // {
-    //     $this->lastcardstyle == $this->countstyles ? $this->lastcardstyle = 1 : $this->lastcardstyle++;
-    //     $this->resetcolor();
-    // }
+    public function rightchengcolor()
+    {
+        $this->stylecard == $this->countstyles ? $this->stylecard = 1 : $this->stylecard++;
+        $this->resetcolor();
+        $this->update();
+    }
 
-    // public function colorcheng($background = '#3C3B3D', $textbackground = '#ffffff')
-    // {
-    //     $this->backgroundbutton = $background;
-    //     $this->textbutton = $textbackground;
-    // }
+    public function colorchengfirst($background = '#3C3B3D', $textbackground = '#ffffff')
+    {
+        $this->background = $background;
+        $this->textbackground = $textbackground;
+    }
+
+    public function colorcheng($background = '#3C3B3D', $textbackground = '#ffffff')
+    {
+        $this->backgroundbutton = $background;
+        $this->textbutton = $textbackground;
+        $this->backgroundscrollBar = sscanf($this->textbutton, "#%02x%02x%02x");
+    }
 
     public function click_preview()
     {
         $this->update();
+        $this->colorcheng($this->background,$this->textbackground);
         $this->component_edit_text = 'cards.cardsMinimalPreview';
     }
 
     public function click_edit()
     {
         $this->component_edit_text = 'cards.cardsMinimalEdit';
-        $this->backgroundbutton = $this->textbackground;
-        $this->textbutton = $this->background;
+        $this->colorcheng($this->textbackground, $this->background);
     }
 
     public function click_chow()
     {
         $this->update();
-        $this->backgroundbutton = $this->background;
-        $this->textbutton = $this->textbackground;
+        $this->colorcheng($this->background,$this->textbackground);
         $this->component_edit_text = 'cards.cardsMinimalShow';
+        $this->emitUp('aftercreateordelete');
     }
 
     public function click_edit_cource()
     {
         $this->update();
+        $this->colorcheng($this->textbackground, $this->background);
         $this->component_edit_text = 'cards.cardsMinimalEditSource';
     }
 
