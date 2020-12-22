@@ -11,7 +11,7 @@ use Livewire\Component;
 class MainHome extends Component
 {
     public $cards;
-    public $endcard;
+    // public $endcard;
     public $background;
     public $textbackground;
     public $component_edit_text;
@@ -32,20 +32,6 @@ class MainHome extends Component
     public $countMaxCardForUser = 5;
     public $lastcardstyle;
     public $countstyles;
-
-    // protected $listeners = ['aftercreate' => 'aftercreate'];
-
-    // public function mount()
-    // {
-    //     $this->user_id = Auth::user()->id;
-    //     $this->aftercreate();
-    // }
-
-    // public function aftercreate()
-    // {
-    //     $this->cards = Card::where('user_id', $this->user_id)->get();
-    //     $this->endcard = $this->cards->last();
-    // }
 
     protected $listeners = ['deletecard' => 'deletecard', 'aftercreateordelete' => 'aftercreateordelete'];
 
@@ -138,7 +124,10 @@ class MainHome extends Component
 
     public function clickNext1()
     {
-        $this->texForTexarea = $this->text;
+        $this->validate([
+            'text' => 'required|min:6',
+            'selectedTag' => 'required|exists:tags,id',
+        ]);
         $this->colorchengmain($this->textbackground,$this->background);
         $this->colorcheng($this->background,$this->textbackground);
         $this->component_edit_text = 'cards.addcardEditSource';
@@ -153,6 +142,9 @@ class MainHome extends Component
 
     public function clickNext2()
     {
+        $this->validate([
+            'source' => 'required|min:6'
+        ]);
         $this->colorchengmain($this->background,$this->textbackground);
         $this->colorcheng($this->background,$this->textbackground);
         $this->component_edit_text = 'cards.addcardPreview';
@@ -167,6 +159,9 @@ class MainHome extends Component
 
     public function clickNext3()
     {
+        $this->validate([
+            'stylecard' => 'required|exists:style_cards,id',
+        ]);
         $this->maxCards();
         if (!$this->checkmaxCards) {
             Card::create([

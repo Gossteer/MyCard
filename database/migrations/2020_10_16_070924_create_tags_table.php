@@ -20,10 +20,6 @@ class CreateTagsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('cards', function (Blueprint $table) {
-            $table->foreignId('tag_id')->default('1')->constrained('tags')->onDelete('set default');
-        });
-
         DB::table('tags')->insert([
             'tag' => 'Общее',
         ]);

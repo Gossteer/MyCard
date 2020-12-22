@@ -31,6 +31,18 @@ class Addcard extends Component
         return view('livewire.addcard');
     }
 
+    protected $rules = [
+        'text' => 'required|min:6',
+        'selectedTagforcard' => 'required|exists:tags,id',
+        'stylecard' => 'required|exists:style_cards,id',
+        'source' => 'required|min:6',
+    ];
+
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
+
     public function mount()
     {
         $this->dateCreate = date("d.m.y");
@@ -48,6 +60,8 @@ class Addcard extends Component
 
     public function clickNext1()
     {
+        $this->validate();
+
         $this->component_edit_text = 'cards.addcardEditSource';
         $this->texForTexarea = $this->text;
         $this->backgroundbutton = $this->background;

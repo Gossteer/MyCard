@@ -401,6 +401,10 @@
     -webkit-clip-path: polygon(0 0,51% 0,51% 100%,0 100%);
   }
 
+  .error {
+    color: red !important;
+  }
+
 
 
 

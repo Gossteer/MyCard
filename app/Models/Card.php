@@ -24,11 +24,11 @@ class Card extends Model
 
     public function tag()
     {
-        return $this->belongsTo('App\Models\Tag');
+        return $this->belongsTo('App\Models\Tag', 'tag_id');
     }
 
     public function user()
     {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo('App\Models\User', 'user_id');
     }
 }

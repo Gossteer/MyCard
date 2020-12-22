@@ -7,24 +7,25 @@ use Livewire\Component;
 
 class Cards extends Component
 {
-    public $text;
-    public $data;
-    public $tag;
+    // public $text;
     public $component_edit_text = 'cards.cardsMinimalShow';
-    public $source;
     public $background;
     public $selectTagsforcard;
-    public $selectedTagforcard;
     public $textbackground;
     public $textbutton;
     public $backgroundbutton;
     public $backgroundscrollBar;
-    public $datatime;
-    public $stylecard;
     public $cardselect;
     public $allstylesforcard;
     public $idCard;
     public $countstyles;
+
+    protected $rules = [
+        'cardselect.text' => 'required|min:6',
+        'cardselect.tag_id' => 'required|exists:tags,id',
+        'cardselect.style_card_id' => 'required|exists:style_cards,id',
+        'cardselect.source' => 'required|min:6',
+    ];
 
     function inverseHex( $color )
     {
@@ -63,14 +64,8 @@ class Cards extends Component
 
     public function mount()
     {
-        $this->data = date('d.m.y', strtotime($this->cardselect->created_at));
-        $this->datatime = date('H:i:s', strtotime($this->cardselect->created_at));
-        $this->text = $this->cardselect->text;
-        $this->countstyles = $this->allstylesforcard->count();
-        $this->stylecard = $this->cardselect->style_card_id;
+        $this->countstyles = $this->allstylesforcard->count(); //Попытаться взять у родительского контроллера (меинхом)
         $this->resetcolor();
-        $this->source = $this->cardselect->source;
-        $this->selectedTagforcard = $this->cardselect->tag_id;
         $this->idCard = $this->cardselect->id;
         //Выгружать в моунт саму карточку, брать от туда стили (присваивать), брать от туда id стиля. Сделать плавный переход хотя бы у кнопок
     }
@@ -80,36 +75,38 @@ class Cards extends Component
 
     public function update()
     {
-        Card::find($this->idCard)->update([
-            'text' => $this->text,
-            'source' => $this->source,
-            'tag_id' => $this->selectedTagforcard,
-            'style_card_id' => $this->stylecard,
+        $this->validate();
+
+        Card::find($this->cardselect->id)->update([
+            'text' => $this->cardselect->text,
+            'source' => $this->cardselect->source,
+            'tag_id' => $this->cardselect->tag_id,
+            'style_card_id' => $this->cardselect->style_card_id,
         ]);
     }
 
     public function removecards()
     {
-        $this->emitUp('deletecard', $this->idCard);
+        $this->emitUp('deletecard', $this->cardselect->id);
     }
 
     public function resetcolor()
     {
-        $this->colorchengfirst($this->allstylesforcard->find($this->stylecard)->background,$this->allstylesforcard->find($this->stylecard)->text);
+        $this->colorchengfirst($this->allstylesforcard->find($this->cardselect->style_card_id)->background,$this->allstylesforcard->find($this->cardselect->style_card_id)->text);
         $this->colorcheng($this->background,$this->textbackground);
     }
 
     public function leftchengcolor()
     {
-        $this->stylecard--;
-        $this->stylecard == 0 ? $this->stylecard = $this->countstyles : '';
+        $this->cardselect->style_card_id--;
+        $this->cardselect->style_card_id == 0 ? $this->cardselect->style_card_id = $this->countstyles : '';
         $this->resetcolor();
         $this->update();
     }
 
     public function rightchengcolor()
     {
-        $this->stylecard == $this->countstyles ? $this->stylecard = 1 : $this->stylecard++;
+        $this->cardselect->style_card_id == $this->countstyles ? $this->cardselect->style_card_id = 1 : $this->cardselect->style_card_id++;
         $this->resetcolor();
         $this->update();
     }
