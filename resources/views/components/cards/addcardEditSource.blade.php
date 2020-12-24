@@ -5,6 +5,6 @@
 </div>
 <div class="containerEdit"  style="{{$attributes['style1']}}">
     <div class="mainText" style=" height: 94%;" >
-        <textarea wire:model.defer="source" maxlength="255" style="{{$attributes['backgroundscrollBar']}}"  title=" @error('source') {{$message}} @enderror " class="texForTexarea @error('source') {{"error"}} @enderror "></textarea>
+        <textarea wire:model.defer="cardadd.source" maxlength="255" style="{{$attributes['backgroundscrollBar']}}"  title=" @error('cardadd.source') {{$message}} @enderror " class="texForTexarea @error('card.source') {{"error"}} @enderror "></textarea>
     </div>
 </div>

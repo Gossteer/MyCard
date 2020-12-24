@@ -64,7 +64,6 @@ class Cards extends Component
 
     public function mount()
     {
-        $this->countstyles = $this->allstylesforcard->count(); //Попытаться взять у родительского контроллера (меинхом)
         $this->resetcolor();
         $this->idCard = $this->cardselect->id;
         //Выгружать в моунт саму карточку, брать от туда стили (присваивать), брать от туда id стиля. Сделать плавный переход хотя бы у кнопок
@@ -77,12 +76,13 @@ class Cards extends Component
     {
         $this->validate();
 
-        Card::find($this->cardselect->id)->update([
-            'text' => $this->cardselect->text,
-            'source' => $this->cardselect->source,
-            'tag_id' => $this->cardselect->tag_id,
-            'style_card_id' => $this->cardselect->style_card_id,
-        ]);
+        $this->cardselect->update();
+        // Card::find($this->cardselect->id)->update([
+        //     'text' => $this->cardselect->text,
+        //     'source' => $this->cardselect->source,
+        //     'tag_id' => $this->cardselect->tag_id,
+        //     'style_card_id' => $this->cardselect->style_card_id,
+        // ]);
     }
 
     public function removecards()

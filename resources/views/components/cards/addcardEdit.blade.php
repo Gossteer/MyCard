@@ -4,20 +4,21 @@
 </div>
 <div class="containerEdit"  style="{{$attributes['style1']}}">
     <div class="mainText" style=" height: 94%;" >
-        <textarea wire:model.defer="text" maxlength="255" class="texForTexarea @error('text') {{"error"}} @enderror" title=" @error('text') {{$message}} @enderror "  style="{{$attributes['backgroundscrollBar']}}"></textarea>
+        <textarea wire:model.defer="cardadd.text" maxlength="255" class="texForTexarea @error('cardadd.text') {{"error"}} @enderror" title=" @error('cardadd.text') {{$message}} @enderror "  style="{{$attributes['backgroundscrollBar']}}"></textarea>
     </div>
     <div class="articles__footer">
-        <div  class="select  @error('selectedTagforcard') {{"error"}} @enderror"  title="@error('selectedTagforcard') {{$message}} @enderror" id="selectcardadd" style="{{$attributes['backgroundscrollBar']}}">
+        <div  class="select  @error('cardadd.tag_id') {{"error"}} @enderror"  title="@error('cardadd.tag_id') {{$message}} @enderror" id="selectcardadd" style="{{$attributes['backgroundscrollBar']}}">
             <div class="select__head" id="selectheadcardadd">{{$attributes['tag']}}</div>
             <ul class="select__list" id="selectlistcardadd" style="display: none;">
                 @foreach ($selectTags as $selectTag)
-                    <li x-data x-on:click="$wire.set('selectedTag', {{$selectTag->id}})" class="select__item" id="selectlistitemcardadd">{{$selectTag->tag}}</li>
+                    <li x-data x-on:click="$wire.set('cardadd.tag_id', {{$selectTag->id}})" class="select__item" id="selectlistitemcardadd">{{$selectTag->tag}}</li>
                 @endforeach
             </ul>
         </div>
         <time title="{{$attributes['timeCreate']}}">{{$attributes['dateCreate']}}</time>
     </div>
 </div>
+
 
 
 {{--

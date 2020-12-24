@@ -11,12 +11,9 @@ use Livewire\Component;
 class MainHome extends Component
 {
     public $cards;
-    // public $endcard;
     public $background;
     public $textbackground;
     public $component_edit_text;
-    public $source;
-    public $text;
     public $checkmaxCards;
     public $selectTags;
     public $textbutton;
@@ -25,13 +22,21 @@ class MainHome extends Component
     public $textbuttonMain;
     public $dateCreate;
     public $timeCreate;
-    public $selectedTag;
     public $allstyles;
     public $backgroundscrollBar;
     public $user_id;
+    public $cardadd;
     public $countMaxCardForUser = 5;
-    public $lastcardstyle;
     public $countstyles;
+
+
+    protected $rules = [
+        'cardadd.text' => 'required|min:6',
+        'cardadd.tag_id' => 'required|exists:tags,id',
+        'cardadd.style_card_id' => 'required|exists:style_cards,id',
+        'cardadd.source' => 'required|min:6',
+        'cardadd.user_id' => 'required'
+    ];
 
     protected $listeners = ['deletecard' => 'deletecard', 'aftercreateordelete' => 'aftercreateordelete'];
 
@@ -47,16 +52,36 @@ class MainHome extends Component
 
     public function aftercreateordelete()
     {
-        $this->cards = Card::where('user_id', $this->user_id)->get();
-        $this->lastcardstyle = $this->cards->last()->style_card_id ?? 1;
+        $this->getCards();
+        $this->newCard();
         $this->resetcolor();
+    }
+
+    public function getCards()
+    {
+        $this->cards = Card::where('user_id', $this->user_id)->get();
+    }
+
+    public function uploudall()
+    {
+        $this->dateCreate = date("d.m.y");
+        $this->timeCreate = date("H:i:s");
+        $this->component_edit_text = 'cards.addcardShow';
     }
 
     public function resetcolor()
     {
-        $this->colorchengfirst($this->allstyles->find($this->lastcardstyle)->background,$this->allstyles->find($this->lastcardstyle)->text);
+        $this->colorchengfirst($this->allstyles->find($this->cardadd->style_card_id)->background,$this->allstyles->find($this->cardadd->style_card_id)->text);
         $this->colorchengmain($this->background,$this->textbackground);
         $this->colorcheng($this->background,$this->textbackground);
+    }
+
+    public function newCard()
+    {
+        $this->cardadd = new Card();
+        $this->cardadd->fill(['tag_id' => 1]);
+        $this->cardadd->fill(['user_id' => $this->user_id]);
+        $this->cardadd->fill(['style_card_id' => $this->cards->last()->style_card_id ?? 1]);
     }
 
     public function deletecard($id)
@@ -65,18 +90,8 @@ class MainHome extends Component
         if ($id == $this->cards->last()->id) {
             $this->aftercreateordelete();
         } else {
-            $this->cards = Card::where('user_id', $this->user_id)->get();
+            $this->getCards();
         }
-    }
-
-    public function uploudall()
-    {
-        $this->dateCreate = date("d.m.y");
-        $this->timeCreate = date("H:i:s");
-        $this->selectedTag = 1;
-        $this->component_edit_text = 'cards.addcardShow';
-        $this->text = '';
-        $this->source = '';
     }
 
     public function render()
@@ -86,14 +101,14 @@ class MainHome extends Component
 
     public function leftchengcolor()
     {
-        $this->lastcardstyle--;
-        $this->lastcardstyle == 0 ? $this->lastcardstyle = $this->countstyles : '';
+        $this->cardadd->style_card_id--;
+        $this->cardadd->style_card_id== 0 ? $this->cardadd->style_card_id= $this->countstyles : '';
         $this->resetcolor();
     }
 
     public function rightchengcolor()
     {
-        $this->lastcardstyle == $this->countstyles ? $this->lastcardstyle = 1 : $this->lastcardstyle++;
+        $this->cardadd->style_card_id== $this->countstyles ? $this->cardadd->style_card_id= 1 : $this->cardadd->style_card_id++;
         $this->resetcolor();
     }
 
@@ -125,8 +140,8 @@ class MainHome extends Component
     public function clickNext1()
     {
         $this->validate([
-            'text' => 'required|min:6',
-            'selectedTag' => 'required|exists:tags,id',
+            'cardadd.text' => 'required|min:6',
+            'cardadd.tag_id' => 'required|exists:tags,id',
         ]);
         $this->colorchengmain($this->textbackground,$this->background);
         $this->colorcheng($this->background,$this->textbackground);
@@ -143,7 +158,7 @@ class MainHome extends Component
     public function clickNext2()
     {
         $this->validate([
-            'source' => 'required|min:6'
+            'cardadd.source' => 'required|min:6'
         ]);
         $this->colorchengmain($this->background,$this->textbackground);
         $this->colorcheng($this->background,$this->textbackground);
@@ -160,20 +175,20 @@ class MainHome extends Component
     public function clickNext3()
     {
         $this->validate([
-            'stylecard' => 'required|exists:style_cards,id',
+            'cardadd.style_card_id' => 'required|exists:style_cards,id',
         ]);
         $this->maxCards();
-        if (!$this->checkmaxCards) {
-            Card::create([
-                'text' => $this->text,
-                'source' => $this->source,
-                'user_id' => $this->user_id,
-                'style_card_id' => $this->lastcardstyle,
-                'tag_id' => $this->selectedTag,
-            ]);
+        if ($this->cardadd->user_id == $this->user_id) {
+            if (!$this->checkmaxCards) {
+                $this->cardadd->save();
+                $this->aftercreateordelete();
+                $this->uploudall();
+            }
+        } else {
             $this->aftercreateordelete();
             $this->uploudall();
         }
+
     }
 
     public function maxCards()

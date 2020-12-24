@@ -6,6 +6,6 @@
 </div>
 <div class="containerEdit"  style="{{$attributes['style1']}}">
     <div class="mainText " style=" height: 94%;" >
-        <textarea wire:model.defer="cardselect.source" maxlength="255" title=" @error('source') {{$message}} @enderror " class="texForTexarea @error('source') {{"error"}} @enderror "></textarea>
+        <textarea wire:model.defer="cardselect.source" maxlength="255" title=" @error('cardselect.source') {{$message}} @enderror " class="texForTexarea @error('cardselect.source') {{"error"}} @enderror "></textarea>
     </div>
 </div>
