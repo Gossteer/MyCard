@@ -14,9 +14,9 @@ class MainHome extends Component
     public $background;
     public $textbackground;
     public $component_edit_text;
-    public $checkmaxCards;
     public $selectTags;
     public $textbutton;
+    public $checkmaxCards;
     public $backgroundbutton;
     public $backgroundMain;
     public $textbuttonMain;
@@ -26,8 +26,10 @@ class MainHome extends Component
     public $backgroundscrollBar;
     public $user_id;
     public $cardadd;
-    public $countMaxCardForUser = 5;
+    const countMaxCardForUser = 5;
+    public $laststylecardid;
     public $countstyles;
+    public $lastcardid;
 
 
     protected $rules = [
@@ -38,7 +40,7 @@ class MainHome extends Component
         'cardadd.user_id' => 'required'
     ];
 
-    protected $listeners = ['deletecard' => 'deletecard', 'aftercreateordelete' => 'aftercreateordelete'];
+    protected $listeners = ['deletecard' => 'deletecard', 'reload' => 'reload'];
 
     public function mount()
     {
@@ -46,15 +48,25 @@ class MainHome extends Component
         $this->countstyles = $this->allstyles->count();
         $this->user_id = Auth::user()->id;
         $this->selectTags = Tag::all();
-        $this->aftercreateordelete();
-        $this->uploudall();
+        $this->afterCreate();
     }
 
-    public function aftercreateordelete()
+    // public function aftercreateordelete()
+    // {
+    //     $this->getCards();
+    //     $this->getLastStyleCardId();
+    //     $this->newCard();
+    //     $this->resetcolor();
+    // }
+
+    public function getLastStyleCardId()
     {
-        $this->getCards();
-        $this->newCard();
-        $this->resetcolor();
+        $this->laststylecardid =  $this->cards->last()->style_card_id ?? 1;
+    }
+
+    public function getLastCardId()
+    {
+        $this->lastcardid =  $this->cards->last()->id ?? null;
     }
 
     public function getCards()
@@ -62,11 +74,47 @@ class MainHome extends Component
         $this->cards = Card::where('user_id', $this->user_id)->get();
     }
 
-    public function uploudall()
+    public function afterCreate()
+    {
+        $this->getCards();
+        $this->getLastStyleCardId();
+        $this->getLastCardId();
+        $this->click_chow();
+    }
+
+    public function afterDelete(int $id)
+    {
+        if ($id == $this->lastcardid) {
+            $this->getCards();
+            $this->getLastStyleCardId();
+            $this->getLastCardId();
+            $this->updateAddCard('style_card_id',  $this->laststylecardid);
+            $this->resetcolor();
+        } else {
+            $this->getCards();
+        }
+    }
+
+    public function reload(int $id)
+    {
+
+        if ($id == $this->lastcardid) {
+            $this->getLastStyleCardId();
+            $this->updateAddCard('style_card_id',  $this->laststylecardid);
+            if ( $this->component_edit_text == 'cards.addcardShow') {
+                $this->resetcolor();
+            } else {
+                $this->colorchengfirst($this->allstyles->find($this->cardadd->style_card_id)->background,$this->allstyles->find($this->cardadd->style_card_id)->text);
+                $this->colorchengmain($this->textbackground,$this->background);
+                $this->colorcheng($this->textbackground,$this->background);
+            }
+        }
+    }
+
+    public function reloadDate()
     {
         $this->dateCreate = date("d.m.y");
         $this->timeCreate = date("H:i:s");
-        $this->component_edit_text = 'cards.addcardShow';
     }
 
     public function resetcolor()
@@ -81,17 +129,18 @@ class MainHome extends Component
         $this->cardadd = new Card();
         $this->cardadd->fill(['tag_id' => 1]);
         $this->cardadd->fill(['user_id' => $this->user_id]);
-        $this->cardadd->fill(['style_card_id' => $this->cards->last()->style_card_id ?? 1]);
+        $this->cardadd->fill(['style_card_id' => $this->laststylecardid]);
+    }
+
+    public function updateAddCard(string $fill, $value)
+    {
+        $this->cardadd->fill([$fill => $value]);
     }
 
     public function deletecard($id)
     {
         Card::find($id)->delete();
-        if ($id == $this->cards->last()->id) {
-            $this->aftercreateordelete();
-        } else {
-            $this->getCards();
-        }
+        $this->afterDelete($id);
     }
 
     public function render()
@@ -112,6 +161,7 @@ class MainHome extends Component
         $this->resetcolor();
     }
 
+    //Проверку на то, что пользователь изменяет/удалёт/создаёт именно свои карточки
     // Проработать двойной клик
     // Сделать валидацию на объём сымволов и другое
     // Сделать возможность добавления собственных тэгов
@@ -177,27 +227,26 @@ class MainHome extends Component
         $this->validate([
             'cardadd.style_card_id' => 'required|exists:style_cards,id',
         ]);
-        $this->maxCards();
         if ($this->cardadd->user_id == $this->user_id) {
-            if (!$this->checkmaxCards) {
+            if (!$this->maxCards()) {
                 $this->cardadd->save();
-                $this->aftercreateordelete();
-                $this->uploudall();
+                $this->afterCreate();
             }
         } else {
-            $this->aftercreateordelete();
-            $this->uploudall();
+            $this->afterCreate();
         }
 
     }
 
-    public function maxCards()
+    public function maxCards() : bool
     {
-        $this->checkmaxCards = ($this->cards->count() + 1) > $this->countMaxCardForUser ? true : '';
+        $this->checkmaxCards = ($this->cards->count() + 1) > self::countMaxCardForUser ? true : '';
+        return $this->checkmaxCards;
     }
 
     public function click_edit()
     {
+        $this->reloadDate();
         $this->colorchengmain($this->textbackground,$this->background);
         $this->colorcheng($this->textbackground,$this->background);
         $this->component_edit_text = 'cards.addcardEdit';
@@ -205,7 +254,8 @@ class MainHome extends Component
 
     public function click_chow()
     {
-        $this->uploudall();
-        $this->aftercreateordelete();
+        $this->newCard();
+        $this->resetcolor();
+        $this->component_edit_text = 'cards.addcardShow';
     }
 }

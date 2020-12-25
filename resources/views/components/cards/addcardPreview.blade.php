@@ -1,10 +1,10 @@
 <div class="multi-button"  style="{{$attributes['style2']}}">
     <button class="fas fa-heart" wire:click="clickNext3()"></button>
-    <button class="fas fa-heart" wire:click="clickBack2"></button>
-    <button class="fas fa-heart" wire:click="clickBack1"></button>
+    <button class="fas fa-heart" wire:click="clickBack2()"></button>
+    <button class="fas fa-heart" wire:click="clickBack1()"></button>
     <button class="fas fa-heart" wire:click="click_chow()"></button>
 </div>
-<a wire:click='leftchengcolor()' style="cursor: pointer;">
+<a wire:click='leftchengcolor()' id='leftchengcolor' style="cursor: pointer;">
     <div class="container articles__link"  style="{{$attributes['style1']}}">
         <div class="mainText" style=" height: 84%;">
             <div class="articles__link link_left"></div>
@@ -16,7 +16,7 @@
         </div>
     </div>
 </a>
-<a wire:click='rightchengcolor()' style="cursor: pointer;">
+<a wire:click='rightchengcolor()' id='rightchengcolor' style="cursor: pointer;">
     <div class="container articles__link_edit"  style="{{$attributes['style1']}}">
         <div class="mainText" style=" height: 84%;">
             <div class="articles__link link_right"></div>
@@ -28,7 +28,7 @@
         </div>
     </div>
 </a>
-
+{{--
 <x-jet-dialog-modal wire:model="checkmaxCards">
     <x-slot name="title">
         Ваш лимит карточек превышен
@@ -43,7 +43,7 @@
             Ок
         </x-jet-button>
     </x-slot>
-</x-jet-dialog-modal>
+</x-jet-dialog-modal> --}}
 
 
 

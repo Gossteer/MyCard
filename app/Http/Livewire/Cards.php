@@ -142,7 +142,7 @@ class Cards extends Component
         $this->update();
         $this->colorcheng($this->background,$this->textbackground);
         $this->component_edit_text = 'cards.cardsMinimalShow';
-        $this->emitUp('aftercreateordelete');
+        $this->emitUp('reload', $this->idCard);
     }
 
     public function click_edit_cource()
