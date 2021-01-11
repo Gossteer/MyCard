@@ -14,8 +14,10 @@ class StyleCard extends Model
         'text',
     ];
 
+    protected $table = 'style_cards';
+
     public function card()
     {
-        return $this->hasMany('App\Models\Card');
+        return $this->hasMany('App\Models\Card', 'style_card_id');
     }
 }

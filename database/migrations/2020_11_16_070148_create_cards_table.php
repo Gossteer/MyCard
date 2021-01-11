@@ -18,8 +18,8 @@ class CreateCardsTable extends Migration
             $table->string('text');
             $table->string('source')->nullable();
             $table->foreignId('user_id')->constrained('users')->onDelete('CASCADE');
-            $table->foreignId('style_card_id')->default('1')->constrained('style_cards')->onDelete('set default');
-            $table->foreignId('tag_id')->default('1')->constrained('tags')->onDelete('set default');
+            $table->foreignId('style_card_id')->default('1')->constrained('style_cards')->onDelete('SET DEFAULT');
+            $table->foreignId('tag_id')->default('1')->constrained('tags')->onDelete('SET DEFAULT');
             $table->timestamps();
         });
     }
