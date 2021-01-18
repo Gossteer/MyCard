@@ -1,7 +1,7 @@
 <div class="multi-button"  style="{{$attributes['style2']}}">
-    <button class="fas fa-heart" wire:click="click_edit_cource()"></button>
-    <button class="fas fa-heart" wire:click="removecards()"></button>
-    <button class="fas fa-heart" wire:click="click_chow()"></button>
+    <button class="fas fa-link" wire:click="click_edit_cource()"></button>
+    <button class="fas fa-trash-alt" wire:click="removecards()"></button>
+    <button class="fas fa-times" wire:click="click_chow()"></button>
 </div>
 <div class="containerEdit"  style="{{$attributes['style1']}}">
     <div class="mainText" style=" height: 94%;" >

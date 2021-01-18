@@ -1,8 +1,8 @@
 <div class="multi-button"  style="{{$attributes['style2']}}">
-    <button class="fas fa-heart" wire:click="clickNext3()"></button>
-    <button class="fas fa-heart" wire:click="clickBack2()"></button>
-    <button class="fas fa-heart" wire:click="clickBack1()"></button>
-    <button class="fas fa-heart" wire:click="click_chow()"></button>
+    <button class="fas fa-plus" wire:click="clickNext3()"></button>
+    <button class="fas fa-link" wire:click="clickBack2()"></button>
+    <button class="fas fa-align-left" wire:click="clickBack1()"></button>
+    <button class="fas fa-times" wire:click="click_chow()"></button>
 </div>
 <a wire:click='leftchengcolor()' id='leftchengcolor' style="cursor: pointer;">
     <div class="container articles__link"  style="{{$attributes['style1']}}">

@@ -15,16 +15,12 @@
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Главная') }}
                     </x-jet-nav-link>
-                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-jet-nav-link href="{{ route('mainHome.index') }}" :active="request()->routeIs('mainHome.index')">
-                            {{ __('Библиотека') }}
-                        </x-jet-nav-link>
-                    </div>
-                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-jet-nav-link href="{{ route('aboutUs.index') }}" :active="request()->routeIs('aboutUs.index')">
-                            {{ __('О нас') }}
-                        </x-jet-nav-link>
-                    </div>
+                    <x-jet-nav-link href="{{ route('mainHome.index') }}" :active="request()->routeIs('mainHome.index')">
+                        {{ __('Библиотека') }}
+                    </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('aboutUs.index') }}" :active="request()->routeIs('aboutUs.index')">
+                        {{ __('О нас') }}
+                    </x-jet-nav-link>
                 </div>
             </div>
 
@@ -116,9 +112,15 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+                {{ __('Главная') }}
             </x-jet-responsive-nav-link>
-        </div> 
+            <x-jet-responsive-nav-link href="{{ route('mainHome.index') }}" :active="request()->routeIs('mainHome.index')">
+                {{ __('Библиотека') }}
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{ route('aboutUs.index') }}" :active="request()->routeIs('aboutUs.index')">
+                {{ __('О нас') }}
+            </x-jet-responsive-nav-link>
+        </div>
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
