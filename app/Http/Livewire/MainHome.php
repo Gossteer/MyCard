@@ -26,10 +26,12 @@ class MainHome extends Component
     public $backgroundscrollBar;
     public $user_id;
     public $cardadd;
-    const countMaxCardForUser = 5;
+    const countMaxCardForUser = 100;
     public $laststylecardid;
     public $countstyles;
     public $lastcardid;
+    public $searchcard;
+    public $searchtag;
 
 
     protected $rules = [
@@ -41,6 +43,16 @@ class MainHome extends Component
     ];
 
     protected $listeners = ['deletecard' => 'deletecard', 'reload' => 'reload'];
+
+    public function render()
+    {
+        $this->getCards();
+
+        return view('livewire.main-home', [
+            'cards' => $this->cards
+        ]);
+    }
+
 
     public function mount()
     {
@@ -71,7 +83,19 @@ class MainHome extends Component
 
     public function getCards()
     {
-        $this->cards = Card::where('user_id', $this->user_id)->get();
+        if ($this->searchtag and $this->searchcard) {
+            $this->cards = Card::where('text', 'like', '%'.$this->searchcard.'%')->where('user_id', $this->user_id)->where('tag_id', $this->searchtag)->get();
+            return;
+        } if ($this->searchtag) {
+            $this->cards = Card::where('user_id', $this->user_id)->where('tag_id', $this->searchtag)->get();
+            return;
+        } if($this->searchcard) {
+            $this->cards = Card::where('text', 'like', '%'.$this->searchcard.'%')->where('user_id', $this->user_id)->get();
+            return;
+        } else {
+            $this->cards = Card::where('user_id', $this->user_id)->get();
+        }
+
     }
 
     public function afterCreate()
@@ -141,11 +165,6 @@ class MainHome extends Component
     {
         Card::find($id)->delete();
         $this->afterDelete($id);
-    }
-
-    public function render()
-    {
-        return view('livewire.main-home');
     }
 
     public function leftchengcolor()

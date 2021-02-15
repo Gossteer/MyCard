@@ -13,6 +13,7 @@
         <!-- Styles -->
         @stack('style')
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link rel="shortcut icon" href="{{asset('images/book.png')}}" type="image/png">
 
         @livewireStyles
 
