@@ -31,7 +31,7 @@
                 </div>
                 <div class="flex-1 form__group field">
                     <input type="text" id="form__field_id" class="form__field" wire:model="searchcard" placeholder="Поиск" name="search"/>
-                    <label for="search" onclick="form_label_click()"  class="form__label">Поиск</label>
+                    <label for="form__field_id" onclick="form_label_click()"  class="form__label">Поиск</label>
                 </div>
             </div>
         </div>
@@ -55,13 +55,6 @@
             </div>
     </div>
 </div>
-
-<script>
-    function form_label_click() {
-        document.getElementById("form__field_id").focus();
-    }
-</script>
-
 
 
 
