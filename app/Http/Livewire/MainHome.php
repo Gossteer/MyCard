@@ -3,14 +3,12 @@
 namespace App\Http\Livewire;
 
 use App\Models\Card;
-use App\Models\StyleCard;
-use App\Models\Tag;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class MainHome extends Component
 {
-    public $cards;
+    public $cards, $cardcontainers;
     public $background;
     public $textbackground;
     public $component_edit_text;
@@ -46,20 +44,36 @@ class MainHome extends Component
 
     public function render()
     {
-        $this->getCards();
-
+        $this->renderGetCards();
+        // dd($this->cardcontainers);
         return view('livewire.main-home', [
-            'cards' => $this->cards
+            'cardcontainers' => $this->cardcontainers
         ]);
     }
 
+    public function renderGetCards()
+    {
+        if ($this->searchtag and $this->searchcard) {
+            $this->getCards(3);
+            return;
+        }
+        if ($this->searchtag) {
+            $this->getCards(2);
+            return;
+        }
+        if($this->searchcard) {
+            $this->getCards(1);
+            return;
+        }
+        if ($this->searchtag === '0' or $this->searchcard === '') {
+            $this->getCards(4);
+            return;
+        }
+    }
 
     public function mount()
     {
-        $this->allstyles = StyleCard::all();
         $this->countstyles = $this->allstyles->count();
-        $this->user_id = Auth::user()->id;
-        $this->selectTags = Tag::all();
         $this->afterCreate();
     }
 
@@ -81,21 +95,36 @@ class MainHome extends Component
         $this->lastcardid =  $this->cards->last()->id ?? null;
     }
 
-    public function getCards()
+    public function getCards(int $variable = 0)
     {
-        if ($this->searchtag and $this->searchcard) {
-            $this->cards = Card::where('text', 'like', '%'.$this->searchcard.'%')->where('user_id', $this->user_id)->where('tag_id', $this->searchtag)->get();
-            return;
-        } if ($this->searchtag) {
-            $this->cards = Card::where('user_id', $this->user_id)->where('tag_id', $this->searchtag)->get();
-            return;
-        } if($this->searchcard) {
-            $this->cards = Card::where('text', 'like', '%'.$this->searchcard.'%')->where('user_id', $this->user_id)->get();
-            return;
-        } else {
-            $this->cards = Card::where('user_id', $this->user_id)->get();
+        $searchcard = mb_strtolower($this->searchcard);
+        switch ($variable) {
+            case 0:
+                $this->cards = Card::where('user_id', Auth::user()->id)->get();
+                $cards = $this->cards;
+                break;
+            case 1:
+                $cards = $this->cards->where('user_id', Auth::user()->id)->filter(function ($card) use($searchcard) {
+                    return strpos($card->text, (string) $searchcard, 0) !== false;
+                });
+                break;
+            case 2:
+                $cards = $this->cards->where('user_id', Auth::user()->id)->where('tag_id', $this->searchtag);
+                break;
+            case 3:
+                $cards = $this->cards->where('user_id', Auth::user()->id)->where('tag_id', $this->searchtag)->filter(function ($card) use($searchcard) {
+                    return strpos($card->text, (string) $searchcard, 0) !== false;
+                });;
+                break;
+            case 4:
+                $cards = $this->cards;
+                break;
         }
 
+        foreach ($this->selectTags as $selectTag) {
+            $cardcontainers[] = $cards->where('tag_id', $selectTag->id);
+        }
+        $this->cardcontainers = $cardcontainers;
     }
 
     public function afterCreate()
@@ -152,7 +181,7 @@ class MainHome extends Component
     {
         $this->cardadd = new Card();
         $this->cardadd->fill(['tag_id' => 1]);
-        $this->cardadd->fill(['user_id' => $this->user_id]);
+        $this->cardadd->fill(['user_id' => Auth::user()->id]);
         $this->cardadd->fill(['style_card_id' => $this->laststylecardid]);
     }
 
@@ -246,7 +275,7 @@ class MainHome extends Component
         $this->validate([
             'cardadd.style_card_id' => 'required|exists:style_cards,id',
         ]);
-        if ($this->cardadd->user_id == $this->user_id) {
+        if ($this->cardadd->user_id == Auth::user()->id) {
             if (!$this->maxCards()) {
                 $this->cardadd->save();
                 $this->afterCreate();

@@ -8,10 +8,10 @@
     <div class="container articles__link"  style="{{$attributes['style1']}}">
         <div class="mainText" style=" height: 84%;">
             <div class="articles__link link_left"></div>
-            <div readonly class="texForTexareaShow" style="overflow: hidden;{{$attributes['backgroundscrollBar']}}">{{$attributes['text']}}</div>
+            <div readonly class="texForTexareaShow" style="overflow: hidden;{{$attributes['backgroundscrollBar']}}">{{$cardadd->text}}</div>
         </div>
         <div class="articles__footer">
-            <p>{{$attributes['tag']}}</p>
+            <p>{{$cardadd->tag->tag}}</p>
             <time ></time>
         </div>
     </div>
@@ -20,7 +20,7 @@
     <div class="container articles__link_edit"  style="{{$attributes['style1']}}">
         <div class="mainText" style=" height: 84%;">
             <div class="articles__link link_right"></div>
-            <div readonly class="texForTexareaShow" style="overflow: hidden;{{$attributes['backgroundscrollBar']}}">{{$attributes['text']}}</div>
+            <div readonly class="texForTexareaShow" style="overflow: hidden;{{$attributes['backgroundscrollBar']}}">{{$cardadd->text}}</div>
         </div>
         <div class="articles__footer">
             <p></p>

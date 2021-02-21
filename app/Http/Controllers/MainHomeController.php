@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\mainHome;
+use App\Models\StyleCard;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class MainHomeController extends Controller
@@ -14,7 +16,7 @@ class MainHomeController extends Controller
      */
     public function index()
     {
-        return view('mainHome.mainHome');
+        return view('mainHome.mainHome', ['allstyles' => StyleCard::all(), 'selectTags' => Tag::all()]);
     }
 
     /**

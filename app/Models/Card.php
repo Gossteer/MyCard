@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Crypt;
 
 class Card extends Model
 {
@@ -30,5 +31,41 @@ class Card extends Model
     public function user()
     {
         return $this->belongsTo('App\Models\User', 'user_id');
+    }
+
+    public function setTextAttribute($value)
+    {
+
+        $this->attributes['text'] = Crypt::encrypt($value);
+
+    }
+
+    public function getTextAttribute($value)
+    {
+        if (is_null($value)) {
+
+            return $value;
+
+        }
+
+        return Crypt::decrypt($value);
+    }
+
+    public function setSourceAttribute($value)
+    {
+
+        $this->attributes['source'] = Crypt::encrypt($value);
+
+    }
+
+    public function getSourceAttribute($value)
+    {
+        if (is_null($value)) {
+
+            return $value;
+
+        }
+
+        return Crypt::decrypt($value);
     }
 }

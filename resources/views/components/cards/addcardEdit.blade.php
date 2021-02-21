@@ -8,7 +8,7 @@
     </div>
     <div class="articles__footer">
         <div  class="select  @error('cardadd.tag_id') {{"error"}} @enderror"  title="@error('cardadd.tag_id') {{$message}} @enderror" id="selectcardadd" style="{{$attributes['backgroundscrollBar']}}">
-            <div class="select__head" id="selectheadcardadd">{{$attributes['tag']}}</div>
+            <div class="select__head" id="selectheadcardadd">{{$cardadd->tag->tag}}</div>
             <ul class="select__list" id="selectlistcardadd" style="display: none;">
                 @foreach ($selectTags as $selectTag)
                     <li x-data x-on:click="$wire.set('cardadd.tag_id', {{$selectTag->id}})" class="select__item" id="selectlistitemcardadd">{{$selectTag->tag}}</li>

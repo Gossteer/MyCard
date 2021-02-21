@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    @livewire('main-home')
+    @livewire('main-home', ['allstyles' => $allstyles, 'selectTags' => $selectTags])
 
 
 

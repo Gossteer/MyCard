@@ -24,6 +24,30 @@ class CreateTagsTable extends Migration
             'tag' => 'Общее',
         ]);
 
+        DB::table('tags')->insert([
+            'tag' => 'Книги',
+        ]);
+
+        DB::table('tags')->insert([
+            'tag' => 'Статьи',
+        ]);
+
+        DB::table('tags')->insert([
+            'tag' => 'Фильмы',
+        ]);
+
+        DB::table('tags')->insert([
+            'tag' => 'Сериалы',
+        ]);
+
+        DB::table('tags')->insert([
+            'tag' => 'Мультфильмы',
+        ]);
+
+        DB::table('tags')->insert([
+            'tag' => 'Видео',
+        ]);
+
     }
 
     /**
