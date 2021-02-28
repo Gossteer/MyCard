@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Card;
 use App\Models\mainHome;
 use App\Models\StyleCard;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MainHomeController extends Controller
 {
@@ -16,7 +18,13 @@ class MainHomeController extends Controller
      */
     public function index()
     {
-        return view('mainHome.mainHome', ['allstyles' => StyleCard::all(), 'selectTags' => Tag::all()]);
+        $cards = Card::where('user_id', Auth::user()->id)->get();
+        $selectTags =  Tag::all();
+        foreach ($selectTags as $selectTag) {
+            $cardcontainers[] = $cards->where('tag_id', $selectTag->id);
+        }
+
+        return view('mainHome.mainHome', ['allstyles' => StyleCard::all(), 'selectTags' => $selectTags, 'cardscontainers' => $cardcontainers]);
     }
 
     /**

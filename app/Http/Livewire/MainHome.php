@@ -29,7 +29,8 @@ class MainHome extends Component
     public $countstyles;
     public $lastcardid;
     public $searchcard;
-    public $searchtag;
+    public $searchtag, $keytag;
+    public $methodaddcardshow, $component_category_text;
 
 
     protected $rules = [
@@ -40,7 +41,7 @@ class MainHome extends Component
         'cardadd.user_id' => 'required'
     ];
 
-    protected $listeners = ['deletecard' => 'deletecard', 'reload' => 'reload'];
+    protected $listeners = ['deletecard' => 'deletecard', 'reload' => 'reload', 'addCardToCollection'];
 
     public function render()
     {
@@ -49,6 +50,14 @@ class MainHome extends Component
         return view('livewire.main-home', [
             'cardcontainers' => $this->cardcontainers
         ]);
+    }
+
+    public function addCardToCollection(Card $card)
+    {
+        if ($card->tag_id == $this->keytag) {
+            $this->cards->push($card);
+            $this->afterCreate();
+        }
     }
 
     public function renderGetCards()
@@ -75,6 +84,14 @@ class MainHome extends Component
     {
         $this->countstyles = $this->allstyles->count();
         $this->afterCreate();
+        $this->methodaddcardshow = "getConponentCardsCategory()";
+        $this->component_category_text = 'cards.addcardShow';
+    }
+
+    public function getConponentCardsCategory()
+    {
+        $this->methodaddcardshow = "click_edit()";
+        $this->component_category_text = 'cards.categorycards';
     }
 
     // public function aftercreateordelete()
@@ -97,15 +114,15 @@ class MainHome extends Component
 
     public function getCards(int $variable = 0)
     {
-        $searchcard = mb_strtolower($this->searchcard);
+
+        $searchcard = mb_strtolower($this->searchcard, 'UTF-8');
         switch ($variable) {
             case 0:
-                $this->cards = Card::where('user_id', Auth::user()->id)->get();
                 $cards = $this->cards;
                 break;
             case 1:
                 $cards = $this->cards->where('user_id', Auth::user()->id)->filter(function ($card) use($searchcard) {
-                    return strpos($card->text, (string) $searchcard, 0) !== false;
+                    return mb_strpos(mb_strtolower($card->text, 'UTF-8'), (string) $searchcard, 0, 'UTF-8') !== false;
                 });
                 break;
             case 2:
@@ -113,7 +130,7 @@ class MainHome extends Component
                 break;
             case 3:
                 $cards = $this->cards->where('user_id', Auth::user()->id)->where('tag_id', $this->searchtag)->filter(function ($card) use($searchcard) {
-                    return strpos($card->text, (string) $searchcard, 0) !== false;
+                    return mb_strpos(mb_strtolower($card->text, 'UTF-8'), (string) $searchcard, 0, 'UTF-8') !== false;
                 });;
                 break;
             case 4:
@@ -121,10 +138,7 @@ class MainHome extends Component
                 break;
         }
 
-        foreach ($this->selectTags as $selectTag) {
-            $cardcontainers[] = $cards->where('tag_id', $selectTag->id);
-        }
-        $this->cardcontainers = $cardcontainers;
+        $this->cardcontainers = $cards;
     }
 
     public function afterCreate()
@@ -180,7 +194,7 @@ class MainHome extends Component
     public function newCard()
     {
         $this->cardadd = new Card();
-        $this->cardadd->fill(['tag_id' => 1]);
+        $this->cardadd->fill(['tag_id' => $this->keytag]);
         $this->cardadd->fill(['user_id' => Auth::user()->id]);
         $this->cardadd->fill(['style_card_id' => $this->laststylecardid]);
     }
@@ -192,7 +206,9 @@ class MainHome extends Component
 
     public function deletecard($id)
     {
-        Card::find($id)->delete();
+        // Card::find($id)->delete();
+        $this->cards->find($id)->delete();
+        $this->cards = $this->cards->except([$id]);
         $this->afterDelete($id);
     }
 
@@ -278,6 +294,7 @@ class MainHome extends Component
         if ($this->cardadd->user_id == Auth::user()->id) {
             if (!$this->maxCards()) {
                 $this->cardadd->save();
+                $this->emitTo('main-home', 'addCardToCollection', $this->cardadd->id);
                 $this->afterCreate();
             }
         } else {
@@ -298,6 +315,7 @@ class MainHome extends Component
         $this->colorchengmain($this->textbackground,$this->background);
         $this->colorcheng($this->textbackground,$this->background);
         $this->component_edit_text = 'cards.addcardEdit';
+
     }
 
     public function click_chow()

@@ -4,9 +4,15 @@
             {{ __('Библиотека') }}
         </h2>
     </x-slot>
-
-    @livewire('main-home', ['allstyles' => $allstyles, 'selectTags' => $selectTags])
-
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="cardMinimal">
+                @foreach ($cardscontainers as $key => $cardscontainer)
+                    @livewire('category-cards', ['allstyles' => &$allstyles, 'selectTags' => &$selectTags, 'cards' => $cardscontainer, 'keytag' => $key+1 ], key($key+1))
+                @endforeach
+            </div>
+        </div>
+    </div>
 
 
     @push('style')
