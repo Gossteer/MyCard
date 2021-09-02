@@ -16,7 +16,7 @@ class CreateCardsTable extends Migration
         Schema::create('cards', function (Blueprint $table) {
             $table->id();
             $table->string('text');
-            $table->string('source')->nullable();
+            $table->text('source')->nullable();
             $table->foreignId('user_id')->constrained('users')->onDelete('CASCADE');
             $table->foreignId('style_card_id')->default('1')->onDelete('SET DEFAULT')->constrained('style_cards');
             $table->foreignId('tag_id')->default('1')->onDelete('SET DEFAULT')->constrained('tags');
